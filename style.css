@@ -1,0 +1,388 @@
+/* style.css - Diseño profesional temática Java */
+:root {
+    --primary-color: #f8981d; /* Naranja Java */
+    --secondary-color: #5382a1; /* Azul Java */
+    --dark-bg: #1e1e1e;
+    --code-bg: #2d2d2d;
+    --text-light: #e0e0e0;
+    --text-dark: #333;
+    --success-green: #28a745;
+    --warning-yellow: #ffc107;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: #f4f4f4;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.site-header {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #2c3e50 100%);
+    color: white;
+    padding: 40px 0;
+    border-bottom: 5px solid var(--primary-color);
+}
+
+.site-header h1 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.site-header h1 i {
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+.site-header .subtitle {
+    font-size: 1.3em;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+/* Navigation */
+.main-nav {
+    background-color: var(--dark-bg);
+    padding: 15px 0;
+    border-bottom: 3px solid var(--primary-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.main-nav a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.1em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.main-nav a:hover {
+    background-color: var(--primary-color);
+    color: var(--dark-bg);
+}
+
+/* Main Content Sections */
+.content-section {
+    background: white;
+    margin: 30px 0;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--primary-color);
+}
+
+.content-section h2 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    font-size: 2em;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.content-section h2 i {
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+/* Info Boxes */
+.info-box {
+    background-color: #e9f2f9;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 5px solid var(--secondary-color);
+}
+
+.info-box h3 {
+    color: var(--secondary-color);
+    margin-bottom: 15px;
+    font-size: 1.4em;
+}
+
+.info-box.warning {
+    background-color: #fff3cd;
+    border-color: var(--warning-yellow);
+    border-left-color: #856404;
+}
+
+.info-box.warning i {
+    color: #856404;
+    margin-right: 10px;
+}
+
+/* Code Blocks */
+.code-block {
+    background-color: var(--code-bg);
+    color: var(--text-light);
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+    border-left: 5px solid var(--primary-color);
+}
+
+.code-block pre {
+    margin: 10px 0 0 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.code-block code {
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+/* Tables */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+.data-table thead {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.data-table td code {
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+/* Step Lists */
+.step-list {
+    list-style: none;
+    counter-reset: step-counter;
+    padding-left: 20px;
+}
+
+.step-list li {
+    counter-increment: step-counter;
+    margin-bottom: 20px;
+    padding-left: 45px;
+    position: relative;
+    font-size: 1.05em;
+}
+
+.step-list li:before {
+    content: counter(step-counter);
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.step-list li strong {
+    color: var(--secondary-color);
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Important text */
+.important {
+    color: #d9534f;
+    font-weight: bold;
+    background-color: #f2dede;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* Next Steps */
+.next-steps {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 30px 0;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.next-steps i {
+    margin: 0 10px;
+}
+
+/* Footer */
+.site-footer {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 40px;
+    border-top: 5px solid var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .site-header h1 {
+        font-size: 2em;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .content-section {
+        padding: 20px;
+    }
+
+    .data-table {
+        font-size: 0.9em;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 8px 10px;
+    }
+
+    .code-block pre {
+        font-size: 0.85em;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .main-nav, .site-footer, .next-steps {
+        display: none;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    .content-section {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}
+
+/* Bloque de código completo (ejecutable) */
+.code-block.complete {
+    border-left: 5px solid #28a745; /* Borde verde */
+    background-color: #1e2b1e; /* Fondo ligeramente verdoso */
+}
+
+.code-block.complete::before {
+    content: "📋 Programa completo - Listo para copiar";
+    display: block;
+    color: #28a745;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Bloque de código fragmento (snippet) */
+.code-block.snippet {
+    border-left: 5px solid #ffc107; /* Borde amarillo */
+    background-color: #2d2d1e; /* Fondo ligeramente amarillento */
+}
+
+.code-block.snippet::before {
+    content: "🔹 Fragmento de código - Parte de un ejemplo";
+    display: block;
+    color: #ffc107;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Bloque de código con advertencia (no ejecutable) */
+.code-block.warning-code {
+    border-left: 5px solid #dc3545; /* Borde rojo */
+    background-color: #2d1e1e; /* Fondo rojizo */
+}
+
+.code-block.warning-code::before {
+    content: "⚠️ Código con error - Solo para aprendizaje";
+    display: block;
+    color: #dc3545;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Ajuste del botón copiar para que no tape la etiqueta */
+.code-block.complete .copy-button,
+.code-block.snippet .copy-button,
+.code-block.warning-code .copy-button {
+    top: 45px; /* Bajamos el botón para dejar espacio a la etiqueta */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .code-block.complete::before,
+    .code-block.snippet::before,
+    .code-block.warning-code::before {
+        font-size: 0.7em;
+        padding-right: 70px; /* Espacio para el botón */
+    }
+    
+    .code-block.complete .copy-button,
+    .code-block.snippet .copy-button,
+    .code-block.warning-code .copy-button {
+        top: 35px;
+    }
+}

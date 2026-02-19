@@ -2,27 +2,235 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Aprendiendo Java desde Cero</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprendiendo Java - Paso a Paso</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome para iconos (opcional pero mejora el diseño) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>¡Bienvenido a mi web de Java!</h1>
-    <p>Aquí aprenderemos Java desde cero paso a paso.</p>
-    
-    <h2>Contenidos:</h2>
-    <ul>
-        <li>Introducción a Java</li>
-        <li>Variables y tipos de datos</li>
-        <li>Estructuras de control</li>
-        <li>Programación orientada a objetos</li>
-    </ul>
-    
-    <h2>Mi primer programa:</h2>
-    <pre>
-public class HolaMundo {
+    <header class="site-header">
+        <div class="container">
+            <h1><i class="fas fa-coffee"></i> Aprendiendo Java, paso a paso</h1>
+            <p class="subtitle">Desde cero con Oracle JDK 21 y Eclipse</p>
+        </div>
+    </header>
+    <main class="container">
+        <section id="inicio" class="content-section">
+            <h2><i class="fas fa-rocket"></i> ¡Bienvenido!</h2>
+            <p>Esta web te guiará en tu camino para aprender Java desde cero. Utilizaremos la versión LTS, <strong><a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" >Oracle JDK 21 </a></strong>, y el entorno de desarrollo integrado (IDE) <strong><a href="https://www.eclipse.org/downloads/" target="_blank">Eclipse</a></strong>.</p>
+            <div class="info-box">
+                <h3>Conceptos Clave Iniciales</h3>
+                <ul>
+                    <li><strong>Workspace (Espacio de trabajo):</strong> Es la carpeta en tu ordenador donde Eclipse guarda todos tus proyectos, configuraciones y preferencias. Piensa en él como tu "oficina" de programación.</li>
+                    <li><strong>Proyecto:</strong> Es una carpeta dentro del workspace que contiene todos los archivos necesarios para una aplicación específica (código, imágenes, librerías).</li>
+                    <li><strong>Package (Paquete):</strong> Es una carpeta dentro del proyecto que usamos para organizar nuestras clases de Java de forma lógica (por ejemplo, por funcionalidad). Sus nombres suelen ser en minúsculas y con dominios invertidos (ej: `com.miweb.util`).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="entorno" class="content-section">
+            <h2><i class="fas fa-cogs"></i> Configurando el Entorno: Eclipse</h2>
+            <p>Aquí tienes los pasos esenciales para crear tu primer proyecto en Eclipse. <strong class="important">Al escribir un nombre recuerda que distingue entre mayúsculas y minúsculas</strong> (Case Sensitive)!</p>
+            <p> </br></p>
+            <ol class="step-list">
+                <li>
+                    <strong>Crear un nuevo Proyecto Java:</strong> Ve a <code>File -> New -> Java Project</code>. Dale un nombre (ej. `MiPrimerProyecto`). Asegúrate de que la JRE seleccionada sea la de Java 21. Haz clic en "Finish".
+                </li>
+                <li>
+                    <strong>Crear un Package:</strong> Dentro de la carpeta `src` de tu proyecto, haz clic derecho y selecciona <code>New -> Package</code>. Nómbralo (ej. `misprimerosprogramas`). Es una buena práctica crear siempre un paquete para organizar el código.
+                </li>
+                <li>
+                    <strong>Crear una Clase:</strong> Haz clic derecho en el package que acabas de crear y selecciona <code>New -> Class</code>. Así es donde escribiremos nuestro código Java.
+                </li>
+            </ol>
+        </section>
+
+        <section id="primer-proyecto" class="content-section">
+            <h2><i class="fas fa-code"></i> El Primer Proyecto: Hola Mundo</h2>
+            <p>Sigue estos pasos para crear tu primer programa. Recuerda, <span class="important">el nombre de la clase debe coincidir EXACTAMENTE con el nombre del archivo</span>.</p>
+            <div class="info-box">
+                <h3>Pasos en Eclipse</h3>
+                <ol>
+                    <li>Crea un nuevo proyecto llamado `ProyectoHolaMundo`.</li>
+                    <li>Dentro de `src`, crea un package `holamundo`.</li>
+                    <li>Dentro del package, crea una nueva clase llamada `HolaMundo`.</li>
+                    <li>Copia el siguiente código en el editor, DENTRO de las llaves de la clase `HolaMundo` que Eclipse ha creado para ti:</li>
+                </ol>
+            </div>
+            <div class="code-block complete">    
+                <pre><code>public static void main(String[] args) {
+    // Esto es un comentario. El programa empezará aquí.
+    System.out.println("¡Hola, Mundo!");
+}</code></pre>
+            </div>
+            <div class="info-box">
+                <p><strong>Para ejecutar:</strong> Haz clic derecho sobre el archivo `HolaMundo.java` en el explorador de proyectos, ve a <code>Run As -> Java Application</code>. Verás el mensaje en la consola.</p>
+            </div>
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Fíjate que `main` va en minúsculas, `String` con mayúscula, y `System` con mayúscula. ¡Un error de mayúscula/minúscula impedirá que tu programa funcione!
+            </div>
+        </section>
+
+        <section id="tipos-datos" class="content-section">
+            <h2><i class="fas fa-database"></i> Tipos de Datos Primitivos en Java</h2>
+            <p>Java tiene tipos de datos fundamentales. Aquí los más usados:</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                        <th>Tamaño</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>int</code></td>
+                        <td>Números enteros</td>
+                        <td><code>int edad = 30;</code></td>
+                        <td>32 bits</td>
+                    </tr>
+                    <tr>
+                        <td><code>double</code></td>
+                        <td>Números decimales de doble precisión</td>
+                        <td><code>double precio = 19.99;</code></td>
+                        <td>64 bits</td>
+                    </tr>
+                    <tr>
+                        <td><code>boolean</code></td>
+                        <td>Verdadero o falso</td>
+                        <td><code>boolean esMayor = true;</code></td>
+                        <td>1 bit</td>
+                    </tr>
+                    <tr>
+                        <td><code>char</code></td>
+                        <td>Un solo carácter (con comillas simples)</td>
+                        <td><code>char inicial = 'A';</code></td>
+                        <td>16 bits</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2>Ejemplo de uso:</h2>
+            <div class="code-block snippet">
+                <pre><code>int anio = 2024;
+double pi = 3.14159;
+boolean cursoActivo = true;
+char letra = 'J';
+
+System.out.println("Estamos en " + anio + ". El valor de pi es " + pi);</code></pre>
+            </div>
+        </section>
+
+        <section id="tipos-datos" class="content-section">
+            <h2><i class="fas fa-database"></i> Tipos de Datos: String</h2>  
+            <p>El tipo de dato <code>String</code> se usa para almacenar cadenas de texto. A diferencia de otros tipos primitivos, <code>String</code> no es primitivo, sino una clase en Java.</p>
+            <div class="code-block snippet">
+                <pre><code>String nombre = "Juan";
+String mensaje = "Hola, " + nombre + "!";</code></pre>
+            </div>
+            <p>String tiene muchos métodos útiles. Aquí los más usados:</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>length()</code></td>
+                        <td>Devuelve la longitud de la cadena</td>
+                        <td><code>int len = nombre.length();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>toUpperCase()</code></td>
+                        <td>Convierte la cadena a mayúsculas</td>
+                        <td><code>String mayus = nombre.toUpperCase();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>toLowerCase()</code></td>
+                        <td>Convierte la cadena a minúsculas</td>
+                        <td><code>String minus = nombre.toLowerCase();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>substring(int start, int end)</code></td>
+                        <td>Obtiene una subcadena desde 'start' hasta 'end'</td>
+                        <td><code>String sub = nombre.substring(0, 2); // "Ju"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>contains(String str)</code></td>
+                        <td>Verifica si la cadena contiene otra cadena</td>
+                        <td><code>boolean tieneA = nombre.contains("a"); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>replace(String target, String replacement)</code></td>
+                        <td>Reemplaza todas las ocurrencias de 'target' por 'replacement'</td>
+                        <td><code>String nuevo = nombre.replace("a", "o"); // "Jun"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>trim()</code></td>
+                        <td>Elimina espacios en blanco al inicio y al final</td>
+                        <td><code>String limpio = "  Hola  ".trim(); // "Hola"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>equals(Object obj)</code></td>
+                        <td>Compara dos cadenas para ver si son iguales</td>
+                        <td><code>boolean igual = nombre.equals("Juan"); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>charAt(int index)</code></td>
+                        <td>Devuelve el carácter en la posición especificada</td>
+                        <td><code>char c = nombre.charAt(0); // "J"</code></td>
+                    </tr>
+                </tbody>
+            </table>    
+        </section>
+
+        <section id="scanner" class="content-section">
+            <h2><i class="fas fa-keyboard"></i> Obteniendo Datos: La Clase Scanner</h2>
+            <p>Para que nuestros programas interactúen con el usuario, necesitamos leer lo que escribe por teclado. Usamos la clase `Scanner`.</p>
+            <div class="info-box">
+                <h3>Pasos para usar Scanner:</h3>
+                <ol class="step-list">
+                    <li><strong>Importar la clase:</strong> Añade al principio del archivo (justo después del package): <code>import java.util.Scanner;</code></li>
+                    <li><strong>Crear el Scanner:</strong> Dentro del `main`, crea el objeto: <code>Scanner sc = new Scanner(System.in);</code></li>
+                    <li><strong>Leer datos:</strong> Usa los métodos adecuados (<code>nextInt()</code>, <code>nextDouble()</code>, <code>nextLine()</code>).</li>
+                    <li><strong>Cerrar el Scanner:</strong> <code>scanner.close();</code> (para liberar recursos).</li>
+                </ol>
+            </div>
+            <h2>Ejemplo completo:</h2>
+            <div class="code-block complete">                
+                <pre><code>import java.util.Scanner;
+
+public class EjemploScanner {
+
     public static void main(String[] args) {
-        System.out.println("¡Hola, Java!");
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.print("¿Cómo te llamas? ");
+        String nombre = entrada.nextLine();
+
+        System.out.print("¿Cuántos años tienes? ");
+        int edad = entrada.nextInt();
+
+        System.out.println("Hola " + nombre + ", tienes " + edad + " años.");
+
+        entrada.close();
     }
-}
-    </pre>
+}</code></pre>
+            </div>
+            <p><strong>Métodos útiles de Scanner:</strong> `nextInt()` (para leer enteros), `nextDouble()` (para decimales), `nextLine()` (para texto con espacios).</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>Aprendiendo Java paso a paso. Usando JDK 21 y Eclipse.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
