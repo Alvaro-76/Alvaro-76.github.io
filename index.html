@@ -58,7 +58,7 @@
                     <li>Copia el siguiente código en el editor, DENTRO de las llaves de la clase `HolaMundo` que Eclipse ha creado para ti:</li>
                 </ol>
             </div>
-            <div class="code-block complete">    
+            <div class="code-block snippet">    
                 <pre><code>public static void main(String[] args) {
     // Esto es un comentario. El programa empezará aquí.
     System.out.println("¡Hola, Mundo!");
@@ -188,6 +188,158 @@ String mensaje = "Hola, " + nombre + "!";</code></pre>
             </table>    
         </section>
 
+        <section id="Operadores" class="content-section">
+            <h2><i class="fas fa-calculator"></i> Operadores en Java</h2>
+            <p>Los operadores son símbolos que realizan operaciones sobre variables y valores. Aquí tienes los más comunes:</p>
+            <h3>Operadores aritméticos:</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Operador</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>+</code></td>
+                        <td>Suma (también concatena Strings)</td>
+                        <td><code>int suma = 5 + 3; // 8<br>String saludo = "Hola, " + "Mundo!"; // "Hola, Mundo!"</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>-</code></td>
+                        <td>Resta</td>
+                        <td><code>int resta = 10 - 4; // 6</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>*</code></td>
+                        <td>Multiplicación</td>
+                        <td><code>int producto = 7 * 6; // 42</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>/</code></td>
+                        <td>División (cuidado con la división entre enteros)</td>
+                        <td><code>int division = 10 / 3; // 3<br>double divisionExacta = 10.0 / 3.0; // 3.333...</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>%</code></td>
+                        <td>Módulo (resto de la división)</td>
+                        <td><code>int resto = 10 % 3; // 1</code></td>
+                    </tr>
+                </tbody>
+            </table>    
+            <h3>Operadores relacionales (Comparación):</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Operador</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>==</code></td>
+                        <td>Igual a (compara valores)</td>
+                        <td><code>boolean esIgual = (5 == 5); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>!=</code></td>
+                        <td>Diferente de</td>
+                        <td><code>boolean esDiferente = (5 != 3); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&gt;</code></td>
+                        <td>Mayor que</td>
+                        <td><code>boolean esMayor = (10 > 5); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;</code></td>
+                        <td>Menor que</td>
+                        <td><code>boolean esMenor = (3 &lt; 7); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&gt;=</code></td>
+                        <td>Mayor o igual que</td>
+                        <td><code>boolean mayorOIgual = (5 >= 5); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>&lt;=</code></td>
+                        <td>Menor o igual que</td>
+                        <td><code>boolean menorOIgual = (4 &lt;= 4); // true</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Para comparar Strings, NO uses <code>==</code>. Usa el método <code>equals()</code> para comparar el contenido de las cadenas. <code>==</code> compara referencias (si apuntan al mismo objeto), no el contenido.
+            </div>
+
+            <h3>Operadores lógicos (para combinar condiciones):</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Operador</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>&&</code></td>
+                        <td>AND lógico (ambas condiciones deben ser verdaderas)</td>
+                        <td><code>boolean resultado = (5 > 3) && (2 < 4); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>||</code></td>
+                        <td>OR lógico (al menos una condición debe ser verdadera)</td>
+                        <td><code>boolean resultado = (5 > 3) || (2 > 4); // true</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>!</code></td>
+                        <td>NOT lógico (niega la condición)</td>
+                        <td><code>boolean resultado = !(5 > 3); // false</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Operadores de asignación:</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Operador</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>=</code></td>
+                        <td>Asignación simple</td>
+                        <td><code>int x = 5;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>+=</code></td>
+                        <td>Suma y asigna</td>
+                        <td><code>x += 3; // x ahora es 8</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>-=</code></td>
+                        <td>Resta y asigna</td>
+                        <td><code>x -= 2; // x ahora es 6</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>*=</code></td>
+                        <td>Multiplica y asigna</td>
+                        <td><code>x *= 4; // x ahora es 24</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>/=</code></td>
+                        <td>Divide y asigna</td>
+                        <td><code>x /= 6; // x ahora es 4</code></td>
+                    </tr>
+                </tbody>
+            </table>    
+        </section> 
+
         <section id="scanner" class="content-section">
             <h2><i class="fas fa-keyboard"></i> Obteniendo Datos: La Clase Scanner</h2>
             <p>Para que nuestros programas interactúen con el usuario, necesitamos leer lo que escribe por teclado. Usamos la clase `Scanner`.</p>
@@ -224,6 +376,8 @@ public class EjemploScanner {
             <p><strong>Métodos útiles de Scanner:</strong> `nextInt()` (para leer enteros), `nextDouble()` (para decimales), `nextLine()` (para texto con espacios).</p>
         </section>
     </main>
+
+
 
     <footer class="site-footer">
         <div class="container">
