@@ -4,41 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aprendiendo Java - Paso a Paso</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome para iconos (opcional pero mejora el diseño) -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Meta tags -->
+    <meta name="description" content="Aprende Java desde cero con Oracle JDK 21 y Eclipse. Guía paso a paso con ejemplos prácticos.">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <h1><i class="fas fa-coffee"></i> Aprendiendo Java, paso a paso</h1>
-            <p class="subtitle">Desde cero con Oracle JDK 21 y Eclipse</p>
-        </div>
-    </header>
+    <!-- Contenedores para los componentes que se cargarán dinámicamente -->
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
     <main class="container">
         <section id="inicio" class="content-section">
             <h2><i class="fas fa-rocket"></i> ¡Bienvenido!</h2>
-            <p>Esta web te guiará en tu camino para aprender Java desde cero. Utilizaremos la versión LTS, <strong><a href="https://www.oracle.com/java/technologies/downloads/" target="_blank" >Oracle JDK 21 </a></strong>, y el entorno de desarrollo integrado (IDE) <strong><a href="https://www.eclipse.org/downloads/" target="_blank">Eclipse</a></strong>.</p>
+            <p>Esta web te guiará en tu camino para aprender Java desde cero. Utilizaremos la versión LTS, <strong><a href="https://www.oracle.com/java/technologies/downloads/" target="_blank">Oracle JDK 21</a></strong>, y el entorno de desarrollo integrado (IDE) <strong><a href="https://www.eclipse.org/downloads/" target="_blank">Eclipse</a></strong>.</p>
             <div class="info-box">
                 <h3>Conceptos Clave Iniciales</h3>
                 <ul>
                     <li><strong>Workspace (Espacio de trabajo):</strong> Es la carpeta en tu ordenador donde Eclipse guarda todos tus proyectos, configuraciones y preferencias. Piensa en él como tu "oficina" de programación.</li>
                     <li><strong>Proyecto:</strong> Es una carpeta dentro del workspace que contiene todos los archivos necesarios para una aplicación específica (código, imágenes, librerías).</li>
-                    <li><strong>Package (Paquete):</strong> Es una carpeta dentro del proyecto que usamos para organizar nuestras clases de Java de forma lógica (por ejemplo, por funcionalidad). Sus nombres suelen ser en minúsculas y con dominios invertidos (ej: `com.miweb.util`).</li>
+                    <li><strong>Package (Paquete):</strong> Es una carpeta dentro del proyecto que usamos para organizar nuestras clases de Java de forma lógica (por ejemplo, por funcionalidad). Sus nombres suelen ser en minúsculas y con dominios invertidos.</li>
                 </ul>
             </div>
         </section>
 
         <section id="entorno" class="content-section">
             <h2><i class="fas fa-cogs"></i> Configurando el Entorno: Eclipse</h2>
-            <p>Aquí tienes los pasos esenciales para crear tu primer proyecto en Eclipse. <strong class="important">Al escribir un nombre recuerda que distingue entre mayúsculas y minúsculas</strong> (Case Sensitive)!</p>
-            <p> </br></p>
+            <p>Aquí tienes los pasos esenciales para crear tu primer proyecto en Eclipse. <strong class="important">Al escribir un nombre recuerda que distingue entre mayúsculas y minúsculas</strong></p>
+            <p> </p>
             <ol class="step-list">
                 <li>
-                    <strong>Crear un nuevo Proyecto Java:</strong> Ve a <code>File -> New -> Java Project</code>. Dale un nombre (ej. `MiPrimerProyecto`). Asegúrate de que la JRE seleccionada sea la de Java 21. Haz clic en "Finish".
+                    <strong>Crear un nuevo Proyecto Java:</strong> Ve a <code>File -> New -> Java Project</code>. Dale un nombre (ej. <b>MiPrimerProyecto</b>). Asegúrate de que la JRE seleccionada sea la de Java 21. Haz clic en "Finish".
                 </li>
                 <li>
-                    <strong>Crear un Package:</strong> Dentro de la carpeta `src` de tu proyecto, haz clic derecho y selecciona <code>New -> Package</code>. Nómbralo (ej. `misprimerosprogramas`). Es una buena práctica crear siempre un paquete para organizar el código.
+                    <strong>Crear un Package:</strong> Dentro de la carpeta <code>src</code> de tu proyecto, haz clic derecho y selecciona <code>New -> Package</code>. Nómbralo (ej. <b>misprimerosprogramas</b>). Es una buena práctica crear siempre un paquete para organizar el código.
                 </li>
                 <li>
                     <strong>Crear una Clase:</strong> Haz clic derecho en el package que acabas de crear y selecciona <code>New -> Class</code>. Así es donde escribiremos nuestro código Java.
@@ -52,23 +53,25 @@
             <div class="info-box">
                 <h3>Pasos en Eclipse</h3>
                 <ol>
-                    <li>Crea un nuevo proyecto llamado `ProyectoHolaMundo`.</li>
-                    <li>Dentro de `src`, crea un package `holamundo`.</li>
-                    <li>Dentro del package, crea una nueva clase llamada `HolaMundo`.</li>
-                    <li>Copia el siguiente código en el editor, DENTRO de las llaves de la clase `HolaMundo` que Eclipse ha creado para ti:</li>
+                    <li>Crea un nuevo proyecto llamado <b>ProyectoHolaMundo</b>.</li>
+                    <li>Dentro de <code>src</code>, crea un package llamado <b>holamundo</b>.</li>
+                    <li>Dentro del package, crea una nueva clase llamada <b>HolaMundo</b>.</li>
+                    <li>Copia el siguiente código en el editor, DENTRO de las llaves de la clase <b>HolaMundo</b> que Eclipse ha creado para ti:</li>
                 </ol>
             </div>
-            <div class="code-block snippet">    
-                <pre><code>public static void main(String[] args) {
-    // Esto es un comentario. El programa empezará aquí.
-    System.out.println("¡Hola, Mundo!");
+            <div class="code-block complete">    
+                <pre><code>public class HolaMundo {
+    public static void main(String[] args) {
+        // Esto es un comentario. El programa empezará aquí.
+        System.out.println("¡Hola, Mundo!");
+    }
 }</code></pre>
             </div>
             <div class="info-box">
-                <p><strong>Para ejecutar:</strong> Haz clic derecho sobre el archivo `HolaMundo.java` en el explorador de proyectos, ve a <code>Run As -> Java Application</code>. Verás el mensaje en la consola.</p>
+                <p><strong>Para ejecutar:</strong> Haz clic derecho sobre el archivo <b>HolaMundo.java</b> en el explorador de proyectos, ve a <code>Run As -> Java Application</code>. Verás el mensaje en la consola.</p>
             </div>
             <div class="info-box warning">
-                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Fíjate que `main` va en minúsculas, `String` con mayúscula, y `System` con mayúscula. ¡Un error de mayúscula/minúscula impedirá que tu programa funcione!
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Fíjate que <code>main</code> va en minúsculas, <code>String</code> con mayúscula, y <code>System</code> con mayúscula. ¡Un error de mayúscula/minúscula impedirá que tu programa funcione!
             </div>
         </section>
 
@@ -101,7 +104,7 @@
                         <td><code>boolean</code></td>
                         <td>Verdadero o falso</td>
                         <td><code>boolean esMayor = true;</code></td>
-                        <td>1 bit</td>
+                        <td>1 byte (8 bits)</td>
                     </tr>
                     <tr>
                         <td><code>char</code></td>
@@ -111,7 +114,7 @@
                     </tr>
                 </tbody>
             </table>
-            <h2>Ejemplo de uso:</h2>
+            <h3>Ejemplo de uso:</h3>
             <div class="code-block snippet">
                 <pre><code>int anio = 2024;
 double pi = 3.14159;
@@ -122,8 +125,8 @@ System.out.println("Estamos en " + anio + ". El valor de pi es " + pi);</code></
             </div>
         </section>
 
-        <section id="tipos-datos" class="content-section">
-            <h2><i class="fas fa-database"></i> Tipos de Datos: String</h2>  
+        <section id="string" class="content-section">
+            <h2><i class="fas fa-font"></i> Tipos de Datos: String</h2>  
             <p>El tipo de dato <code>String</code> se usa para almacenar cadenas de texto. A diferencia de otros tipos primitivos, <code>String</code> no es primitivo, sino una clase en Java.</p>
             <div class="code-block snippet">
                 <pre><code>String nombre = "Juan";
@@ -156,7 +159,7 @@ String mensaje = "Hola, " + nombre + "!";</code></pre>
                     </tr>
                     <tr>
                         <td><code>substring(int start, int end)</code></td>
-                        <td>Obtiene una subcadena desde 'start' hasta 'end'</td>
+                        <td>Obtiene una subcadena desde <code>start</code> hasta <code>end</code></td>
                         <td><code>String sub = nombre.substring(0, 2); // "Ju"</code></td>
                     </tr>
                     <tr>
@@ -166,7 +169,7 @@ String mensaje = "Hola, " + nombre + "!";</code></pre>
                     </tr>
                     <tr>
                         <td><code>replace(String target, String replacement)</code></td>
-                        <td>Reemplaza todas las ocurrencias de 'target' por 'replacement'</td>
+                        <td>Reemplaza todas las ocurrencias de <code>target</code> por <code>replacement</code></td>
                         <td><code>String nuevo = nombre.replace("a", "o"); // "Jun"</code></td>
                     </tr>
                     <tr>
@@ -188,9 +191,10 @@ String mensaje = "Hola, " + nombre + "!";</code></pre>
             </table>    
         </section>
 
-        <section id="Operadores" class="content-section">
+        <section id="operadores" class="content-section">
             <h2><i class="fas fa-calculator"></i> Operadores en Java</h2>
             <p>Los operadores son símbolos que realizan operaciones sobre variables y valores. Aquí tienes los más comunes:</p>
+            
             <h3>Operadores aritméticos:</h3>
             <table class="data-table">
                 <thead>
@@ -228,6 +232,7 @@ String mensaje = "Hola, " + nombre + "!";</code></pre>
                     </tr>
                 </tbody>
             </table>    
+            
             <h3>Operadores relacionales (Comparación):</h3>
             <table class="data-table">
                 <thead>
@@ -270,6 +275,7 @@ String mensaje = "Hola, " + nombre + "!";</code></pre>
                     </tr>
                 </tbody>
             </table>
+            
             <div class="info-box warning">
                 <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Para comparar Strings, NO uses <code>==</code>. Usa el método <code>equals()</code> para comparar el contenido de las cadenas. <code>==</code> compara referencias (si apuntan al mismo objeto), no el contenido.
             </div>
@@ -301,6 +307,7 @@ String mensaje = "Hola, " + nombre + "!";</code></pre>
                     </tr>
                 </tbody>
             </table>
+            
             <h3>Operadores de asignación:</h3>
             <table class="data-table">
                 <thead>
@@ -341,82 +348,44 @@ String mensaje = "Hola, " + nombre + "!";</code></pre>
         </section> 
 
         <section id="conversiones" class="content-section">
-            <h2>Conversiones de tipos de datos</h2>
+            <h2><i class="fas fa-exchange-alt"></i> Conversiones de tipos de datos</h2>
             <p>En Java, a veces necesitamos convertir un tipo de dato a otro. Por ejemplo, convertir un número entero a decimal o viceversa.</p>
-            <h2>Ejemplos de conversiones:</h2>
-            <div class="code-block snippet">                
-                <ul class="conversion-list">
-                    <li><code>int x = 5;</code></li>
-                    <li><code>double y = (double) x; // Conversión explícita</code></li>
-                    <li><code>int z = (int) y; // Conversión explícita</code></li>
-                </ul>
-            </div>
-            <div class="info-box">
-             <p><strong>Nota:</strong> La conversión explícita (casting) puede causar pérdida de información si el tipo de destino no puede representar el valor original (ej. convertir un double a int truncará los decimales).</p>
-             </div>
-             <h2> Conversión implícita</h2>
+            
+            <h3>Conversión implícita</h3>
             <p>Es la conversión automática de un tipo de dato pequeño a uno más grande. No hay pérdida de información.</p>
             <div class="code-block snippet">                
-                <ul class="conversion-list">
-                    <li><code>int x = 5;</code></li>
-                    <li><code>double y = x; // Conversión automática</code></li>
-                </ul>
+                <pre><code>int x = 5;
+double y = x; // Conversión automática (implícita)</code></pre>
             </div>
-            <h2>Conversión explícita (Casting)</h2>
+            
+            <h3>Conversión explícita (Casting)</h3>
             <p>Es la conversión explícita que hacemos nosotros, indicando el tipo al que queremos convertir.</p>
             <div class="code-block snippet">                
-                <ul class="conversion-list">
-                    <li><code>double grande = 99.9;</code></li>
-                    <li><code>int pequeño = (int) grande;  // Fuerzo con (int) y se pierde la parte decimal</code></li>                     
-                </ul>
+                <pre><code>double grande = 99.9;
+int pequeño = (int) grande;  // Casting explícito - se pierde la parte decimal (99)</code></pre>
             </div>
-    </section>
-
-        <section id="scanner" class="content-section">
-            <h2><i class="fas fa-keyboard"></i> Obteniendo Datos: La Clase Scanner</h2>
-            <p>Para que nuestros programas interactúen con el usuario, necesitamos leer lo que escribe por teclado. Usamos la clase Scanner.</p>
+            
             <div class="info-box">
-                <h3>Pasos para usar Scanner:</h3>
-                <ol class="step-list">
-                    <li><strong>Importar la clase:</strong> Añade al principio del archivo (justo después del package): <code>import java.util.Scanner;</code></li>
-                    <li><strong>Crear el Scanner:</strong> Dentro del `main`, crea el objeto: <code>Scanner sc = new Scanner(System.in);</code></li>
-                    <li><strong>Leer datos:</strong> Usa los métodos adecuados (<code>nextInt()</code>, <code>nextDouble()</code>, <code>nextLine()</code>).</li>
-                    <li><strong>Cerrar el Scanner:</strong> <code>scanner.close();</code> (para liberar recursos).</li>
-                </ol>
+                <p><strong>Nota:</strong> La conversión explícita (casting) puede causar pérdida de información si el tipo de destino no puede representar el valor original (ej. convertir un double a int truncará los decimales).</p>
             </div>
-            <h2>Ejemplo completo:</h2>
-            <div class="code-block complete">                
-                <pre><code>import java.util.Scanner;
+        </section>
 
-public class EjemploScanner {
 
-    public static void main(String[] args) {
-        Scanner entrada = new Scanner(System.in);
-
-        System.out.print("¿Cómo te llamas? ");
-        String nombre = entrada.nextLine();
-
-        System.out.print("¿Cuántos años tienes? ");
-        int edad = entrada.nextInt();
-
-        System.out.println("Hola " + nombre + ", tienes " + edad + " años.");
-
-        entrada.close();
-    }
-}</code></pre>
-            </div>
-            <p><strong>Métodos útiles de Scanner:</strong> nextInt() (para leer enteros), nextDouble() (para decimales), nextLine() (para texto con espacios).</p>
-        <div class="info-box warning">
-            <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Si usas nextInt() seguido de nextLine(), el nextLine() puede "saltar" porque el enter que se queda en el buffer después de leer el número es leído por nextLine(). Para evitar esto, puedes añadir un nextLine() extra después de nextInt() para consumir ese enter sobrante.
-        </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>Aprendiendo Java paso a paso. Usando JDK 21 y Eclipse.</p>
-        </div>
-    </footer>
+    <!-- Footer container -->
+    <div id="footer-container"></div>
 
-    <script src="script.js"></script>
+    <!-- Configuración de la página actual -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: 'inicio',
+            titulo: 'Aprendiendo Java, paso a paso',
+            subtitulo: 'Desde cero con Oracle JDK 21 y Eclipse'
+        };
+    </script>
+
+    <!-- Script principal -->
+    <script src="js/script.js"></script>
 </body>
 </html>
