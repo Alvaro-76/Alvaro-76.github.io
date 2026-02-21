@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Estructuras de Control</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende las estructuras de control en Java: condicionales, bucles y manejo de excepciones.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <!-- Menú lateral (se cargará dinámicamente) -->
+    <div id="menu-container"></div>
+    
+    <!-- Header (se cargará dinámicamente) -->
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="estructuras-control" class="content-section">
+            <h2><i class="fas fa-cogs"></i> Estructuras de Control</h2>
+            <p>En esta sección aprenderás sobre las estructuras de control en Java, que te permiten dirigir el flujo de tu programa según ciertas condiciones o repetir bloques de código.</p>
+            <p>Existen tres tipos principales de estructuras de control:</p>
+            <ul class="step-list">
+                <li><strong>Condicionales:</strong> Permiten ejecutar bloques de código solo si se cumple una condición.</li>
+                <li><strong>Bucles:</strong> Permiten repetir bloques de código mientras se cumpla una condición.</li>
+                <li><strong>Manejo de excepciones:</strong> Permite capturar y gestionar errores que pueden ocurrir durante la ejecución del programa.</li>
+            </ul>
+        </section>
+
+        <section id="condicionales" class="content-section">
+            <h2><i class="fas fa-if"></i> Condicionales</h2>
+            <div>
+                <p><strong>¿Qué es una estructura condicional?</strong> Es una construcción que permite ejecutar diferentes bloques de código dependiendo de si una condición es verdadera o falsa. Esto es fundamental para tomar decisiones en tu programa.</p>
+            </div>
+            <div  class="info-box">
+                <p>Las estructuras condicionales en Java incluyen:</p>
+                <ul>
+                    <li><code>if</code>: Ejecuta un bloque de código si se cumple una condición.</li>
+                    <li><code>if-else</code>: Ejecuta un bloque de código si se cumple una condición, y otro bloque si no se cumple.</li>
+                    <li><code>switch</code>: Permite seleccionar entre múltiples opciones basadas en el valor de una variable.</li>
+                </ul> 
+            </div>
+  
+
+            <h3>Ejemplo de uso de <code>if-else</code>:</h3>
+            <div class="code-block snippet">
+                <pre><code class="java">        
+int numero = 10;
+if (numero > 0) {
+    System.out.println("El número es positivo.");
+} else {
+    System.out.println("El número es negativo o cero.");
+}
+            </code></pre>
+            </div>
+            <p>En este ejemplo, el programa verifica si el número es mayor que cero y muestra un mensaje en consecuencia.</p>
+
+            <h3>Ejemplo de uso de <code>if-else if-else</code>:</h3>
+            <div class="code-block snippet">
+                <pre><code class="java">
+int numero = 0;
+if (numero > 0) {
+    System.out.println("El número es positivo.");
+} else if (numero < 0) {
+    System.out.println("El número es negativo.");
+} else {
+    System.out.println("El número es cero.");
+}
+            </code></pre>
+            </div>
+            <p>En este ejemplo, el programa verifica si el número es positivo, negativo o cero, y muestra un mensaje adecuado para cada caso.</p>
+
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Se pueden anidar múltiples estructuras condicionales para manejar casos más complejos, pero es recomendable mantener el código claro y legible para evitar confusiones.
+            </div>
+
+            <h3>Ejemplo de uso de <code>switch</code>:</h3>
+            <div class="code-block snippet">
+                <pre><code class="java">
+int dia = 3;
+switch (dia) {
+    case 1:
+        System.out.println("Lunes");
+        break;
+    case 2:
+        System.out.println("Martes");
+        break;
+    case 3:
+        System.out.println("Miércoles");
+        break;
+    default:
+        System.out.println("Día no válido");
+}
+            </code></pre>
+            </div>
+            <p>En este ejemplo, el programa utiliza una estructura <code>switch</code> para imprimir el nombre del día de la semana basado en el valor de la variable <code>dia</code>.</p>
+            
+            <div class="info-box">
+                <p><strong>Nota:</strong> Es importante usar la palabra clave <code>break</code> al final de cada caso en un <code>switch</code> para evitar que el programa ejecute casos adicionales de manera no intencionada.</p>
+            </div>
+
+        </section>  
+
+        <section id="bucles" class="content-section">
+            <h2><i class="fas fa-repeat"></i> Bucles</h2>
+            <div>
+                <p><strong>¿Qué es un bucle?</strong> Un bucle es una estructura de control que permite repetir un bloque de código mientras se cumpla una condición específica. Esto es útil para realizar tareas repetitivas sin tener que escribir el mismo código varias veces.</p>
+            </div>
+            <div class="info-box">
+                <p>Los bucles existentes en Java son:</p>
+                <ul>
+                    <li><code><strong>for</strong></code>: Repite un bloque de código un número específico de veces.</li>
+                    <li><code><strong>foreach</strong></code>: Repite un bloque de código para cada elemento de una colección o arreglo.</li>
+                    <li><code><strong>while</strong></code>: Repite un bloque de código mientras se cumpla una condición.</li>
+                    <li><code><strong>do-while</strong></code>: Similar a <code>while</code>, pero garantiza que el bloque de código se ejecute al menos una vez.</li>
+                </ul>
+            </div>
+            <div >
+            <h3>Ejemplo de uso de <code>for</code>:</h3>
+            <div class="code-block snippet">
+                <pre><code class="java">
+for (int i = 0; i < 5; i++) {
+    System.out.println("Iteración: " + i);
+}
+                </code></pre>
+            </div>
+            <p>En este ejemplo, el programa imprime las iteraciones del 0 al 4 utilizando un bucle <code>for</code>.</p>
+            </div>
+            <h3>Ejemplo de uso de <code>foreach</code>:</h3>
+            <div class="code-block snippet">
+                <pre><code class="java">
+String[] frutas = {"Manzana", "Banana", "Cereza"};
+for (String fruta : frutas) {
+    System.out.println("Fruta: " + fruta);
+}
+                </code></pre>
+            </div>
+            <p>En este ejemplo, el programa utiliza un bucle <code>foreach</code> para iterar sobre un arreglo de frutas y imprimir cada una de ellas.</p>
+
+            <h3>Ejemplo de uso de <code>while</code>:</h3>
+            <div class="code-block snippet">
+                <pre><code class="java">
+int contador = 0;
+while (contador < 5) {
+    System.out.println("Contador: " + contador);
+    contador++;
+}
+                </code></pre>
+            </div>
+            <p>En este ejemplo, el programa utiliza un bucle <code>while</code> para imprimir el valor del contador mientras sea menor que 5.</p>  
+
+            <div class="info-box">
+                <p> los bucle <code>while</code> estan repitiendo el bloque de código mientras la condición sea verdadera.</p>
+            </div>
+             
+            <h3>Ejemplo de uso de <code>do-while</code>:</h3>
+            <div class="code-block snippet">
+                <pre><code class="java">
+int contador = 0;
+do {
+    System.out.println("Contador: " + contador);
+    contador++;
+} while (contador < 5);
+                </code></pre>
+            </div>
+            <p>En este ejemplo, el programa utiliza un bucle <code>do-while</code> para imprimir el valor del contador, garantizando que el bloque de código se ejecute al menos una vez, incluso si la condición inicial no se cumple.</p> 
+
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Recuerda que es fundamental evitar bucles infinitos, asegurándote de que la condición de salida se cumpla en algún momento.
+            </div>
+            <div class="info-box">
+                <p>Como saber que tipo de bucle usar:</p>
+                <ul>
+                    <li><code><strong>for:</strong></code> Cuando conoces de antemano cuántas veces quieres repetir el bloque de código.</li>
+                    <li><code><strong>foreach:</strong></code> Cuando necesitas iterar sobre una colección o arreglo sin preocuparte por los índices.</li>
+                    <li><code><strong>while:</strong></code> Cuando no sabes cuántas veces se repetirá el bloque, pero conoces la condición para continuar.</li>
+                    <li><code><strong>do-while:</strong></code> Cuando necesitas que el bloque de código se ejecute al menos una vez, incluso si la condición no se cumple inicialmente.</li>
+                </ul>
+                <p>Es importante elegir el tipo de bucle adecuado según la situación específica para mantener el código claro y eficiente.</p>
+            </div>
+
+        </section>
+        <section id="control-flujo" class="content-section">
+            <h2><i class="fas fa-stream"></i> Control de Flujo</h2>
+            <div>
+                <p><strong>¿Qué es el control de flujo?</strong> El control de flujo se refiere a la forma en que se dirige la ejecución de un programa. Las estructuras de control, como las condicionales y los bucles, son herramientas fundamentales para controlar el flujo de tu programa y tomar decisiones basadas en condiciones específicas.</p>
+                <p>Pero estos flujos pueden ser alterados por las palabras clave <strong><code>break</code></strong>, <strong></strong><code>continue</code></strong> y <code>return</code>, que permiten modificar el comportamiento normal del flujo de ejecución de un programa.</p>
+            </div>
+             <div class="info-box">
+                <p>El control de flujo es esencial para crear programas dinámicos y flexibles que puedan adaptarse a diferentes situaciones y datos de entrada. Al dominar las estructuras de control, podrás escribir código más eficiente y efectivo, capaz de manejar una amplia variedad de escenarios.</p>
+            </div>
+            <div class="code-block snippet">
+                <pre><code class="java">
+// Ejemplo de uso de break
+for (int i = 0; i < 10; i++) {
+    if (i == 5) {
+        break;
+    }
+    System.out.println(i);
+}
+
+// Ejemplo de uso de continue
+for (int i = 0; i < 10; i++) {
+    if (i == 5) {
+        continue;
+    }
+    System.out.println(i);
+}
+
+// Ejemplo de uso de return
+public static int sumar(int a, int b) {
+    if (a < 0 || b < 0) {
+        return -1; // Devuelve -1 si alguno es negativo
+    }
+    return a + b;
+}
+                </code></pre>
+            </div>
+            <p>En el primer ejemplo, el bucle se detiene cuando <code>i</code> es igual a 5 debido al uso de <code>break</code>.</p>
+            <p>En el segundo ejemplo, el número 5 se omite en la impresión debido al uso de <code>continue</code>.</p>
+            <p>En el tercer ejemplo, la función <code>sumar</code> devuelve -1 si alguno de los parámetros es negativo, utilizando <code>return</code> para salir de la función.</p>
+
+
+             <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> El control de flujo es una parte fundamental de la programación, y su comprensión es clave para desarrollar programas robustos y eficientes. Asegúrate de practicar y experimentar con diferentes estructuras de control para fortalecer tus habilidades de programación.
+            </div>
+
+        </section>
+        
+    </main>
+    
+    <!-- Footer (se cargará dinámicamente) -->
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        // Configuración específica de esta página
+        const PAGINA_CONFIG = {
+            id: "estructuras-control",
+            titulo: "Estructuras de Control",
+            subtitulo: "Condicionales, bucles y manejo de excepciones"
+        };
+    </script>
+    
+    <!-- JavaScript principal -->
+    <script src="js/script.js"></script>
+</body>
+</html>
