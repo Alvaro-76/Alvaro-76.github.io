@@ -1,0 +1,62 @@
+<!-- =============================================
+     MENÚ LATERAL ESTILO LIBRO - VERSIÓN COMPLETA
+     ============================================= -->
+
+<!-- Botón flotante para abrir el menú -->
+<div class="book-menu-container">
+    <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-book-open"></i>
+        <span>Índice</span>
+    </button>
+    
+    <!-- Menú lateral -->
+    <nav class="book-sidebar" id="bookSidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-coffee"></i>
+            <h3>Contenido</h3>
+            <button class="sidebar-close" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="sidebar-content">
+        
+            <div class="sidebar-section">
+		<div class="section-title has-submenu" data-toggle="submenu-1">                   
+                    <i class="fas fa-rocket"></i> 
+                    <span>Inicio</span>
+                    <i class="fas fa-chevron-right toggle-icon"></i>
+		</div>
+                <div class="submenu" id="submenu-1">
+		    <a href="index.html#inicio" class="submenu-item" data-page="inicio">Inicio</a>
+                    <a href="index.html#entorno" class="submenu-item" data-page="entorno">Configurar Eclipse</a>
+                    <a href="index.html#primer-proyecto" class="submenu-item" data-page="primer-proyecto">Hola Mundo</a>
+                    <a href="index.html#tipos-datos" class="submenu-item" data-page="tipos-datos">Tipos de Datos</a>
+                    <a href="index.html#operadores" class="submenu-item" data-page="operadores">Operadores</a>
+                    <a href="index.html#conversiones" class="submenu-item" data-page="conversiones">Conversiones</a>
+                </div>
+            </div>
+	    <div class="sidebar-section">
+		<div class="section-title has-submenu" data-toggle="submenu-pag1">
+		   <i class="fas fa-keyboard"></i>
+                    <span>Entrada y Salida</span>
+                    <i class="fas fa-chevron-right toggle-icon"></i>
+		</div>
+                <div class="submenu" id="submenu-pag1">
+                    <a href="tema2.html#entrada" class="submenu-item" data-page="entrada">Entrada/Salida Datos</a>
+                    <a href="tema2.html#salida" class="submenu-item" data-page="salida">Mostrando Información</a>
+                    <a href="tema2.html#scanner" class="submenu-item" data-page="scanner">Obteniendo datos</a>
+                </div>
+            </div>		
+
+
+        </div>
+
+        <!-- Footer -->
+        <div class="sidebar-footer">
+            <div class="footer-info">
+                <i class="fas fa-coffee"></i>
+                <span>Aprende Java paso a paso</span>
+            </div>
+        </div>
+    </nav>
+</div>
