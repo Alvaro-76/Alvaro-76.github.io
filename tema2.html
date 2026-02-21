@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Entrada y Salida de Datos</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende a usar System.out.print(), System.out.println() y System.out.printf() para mostrar información en la consola de Java.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <!-- Menú lateral (se cargará dinámicamente) -->
+    <div id="menu-container"></div>
+    
+    <!-- Header (se cargará dinámicamente) -->
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="entrada" class="content-section">
+            <h2><i class="fas fa-keyboard"></i> Entrada y Salida de Datos</h2>
+            
+            <p>En esta sección aprenderemos cómo mostrar información al usuario por consola y cómo leer lo que escribe por teclado.</p>
+                    
+            <p>La entrada y salida de datos en Java se realiza principalmente a través de la consola, utilizando la clase <code>System</code> para la salida y la clase <code>Scanner</code> para la entrada. A continuación, veremos cómo usar ambas para crear programas interactivos.</p>
+        </section>
+
+        <section id="salida" class="content-section">
+            <h2><i class="fas fa-terminal"></i> Mostrando Información: La clase System</h2>
+            <p>Para mostrar información en la consola, usamos de la clase <code>System</code> el método <code>print()</code>. Existen varios métodos en esta clase, que veremos a continuación:</p>
+            
+            <div class="info-box">
+                <h3><code>System.out.print()</code></h3>
+                <p>Para mostrar texto sin salto de línea.</p>
+                <div class="code-block">
+                    <pre><code>System.out.print("Hola");
+System.out.print("Mundo");</code></pre>
+                </div>
+                <p>El ejemplo mostrará "HolaMundo" en la consola (todo en la misma línea).</p>
+            </div>
+            <div class="info-box">
+                <h3><code>System.out.println()</code></h3>
+                <p>Para mostrar texto con salto de línea.</p>
+                <div class="code-block">
+                    <pre><code>System.out.println("Hola");
+System.out.println("Mundo");</code></pre>
+                </div>
+                <p>El ejemplo mostrará "Hola" y "Mundo" en líneas separadas.</p>
+            </div>
+            <div class="info-box">
+                <h3><code>System.out.printf()</code></h3>
+                <p>Para formatear la salida de manera precisa (muy útil para números decimales).</p>
+                <div class="code-block">
+                    <pre><code>System.out.printf("Número: %d Pi: %.2f", 42, 3.14159);</code></pre>                    
+                </div>
+                <p>El ejemplo mostrará "Número: 42 Pi: 3.14" en la consola.</p>
+            </div>    
+
+            <div class="info-box">
+                <h3>Ejemplo completo:</h3>
+                <div class="code-block">
+                    <pre><code>public class EjemploSalida {
+    public static void main(String[] args) {
+        System.out.println("¡Hola, Mundo!");
+        System.out.println("Bienvenido a Java.");
+    }
+}</code></pre>
+                </div>
+                <p>Este ejemplo muestra por pantalla el mensaje "¡Hola, Mundo!" seguido del mensaje "Bienvenido a Java." con un salto de línea entre ambos.</p>
+                <p>El resultado sería:</p>
+                <div class="code-block">
+                    <pre><code>¡Hola, Mundo!
+Bienvenido a Java.</code></pre>
+                </div>
+            </div>  
+                
+            <h3>Formatos comunes en printf:</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Formato</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                        <th>Salida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>%d</code></td>
+                        <td>Entero decimal</td>
+                        <td><code>System.out.printf("Número: %d", 42);</code></td>
+                        <td>Número: 42</td>
+                    </tr>
+                    <tr>
+                        <td><code>%f</code></td>
+                        <td>Número de punto flotante</td>
+                        <td><code>System.out.printf("Pi: %.2f", 3.14159);</code></td>
+                        <td>Pi: 3.14</td>
+                    </tr>
+                    <tr>
+                        <td><code>%s</code></td>
+                        <td>Cadena de texto</td>
+                        <td><code>System.out.printf("Hola, %s!", "Mundo");</code></td>
+                        <td>Hola, Mundo!</td>
+                    </tr>
+                    <tr>
+                        <td><code>%n</code></td>
+                        <td>Salto de línea (equivale a \n)</td>
+                        <td><code>System.out.printf("Línea 1%nLínea 2");</code></td>
+                        <td>Línea 1<br>Línea 2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>    
+        
+        <section id="scanner" class="content-section">
+            <h2><i class="fas fa-keyboard"></i> Obteniendo Datos: La Clase Scanner</h2>
+            <p>Para que nuestros programas interactúen con el usuario, necesitamos leer lo que escribe por teclado. Usamos la clase <code>Scanner</code>, que viene incluida en Java.</p>
+            
+            <div class="info-box">
+                <h3>¿Por qué usar Scanner?</h3>
+                <p>Imagina que tu programa necesita saber la edad del usuario. No podemos adivinarla, así que necesitamos <strong>pedirle que la ingrese</strong>. La clase <code>Scanner</code> nos permite hacer exactamente esto: leer lo que el usuario escribe desde el teclado.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Pasos para usar Scanner:</h3>
+                <ol class="step-list">
+                    <li><strong>Importar la clase:</strong> Añade al principio del archivo (justo después del package): <code>import java.util.Scanner;</code></li>
+                    <li><strong>Crear el Scanner:</strong> Dentro del <code>main</code>, crea el objeto: <code>Scanner sc = new Scanner(System.in);</code></li>
+                    <li><strong>Leer datos:</strong> Usa los métodos adecuados (<code>nextInt()</code>, <code>nextDouble()</code>, <code>nextLine()</code>).</li>
+                    <li><strong>Cerrar el Scanner:</strong> <code>sc.close();</code> (para liberar recursos).</li>
+                </ol>
+            </div>
+
+            <h3>Métodos más utilizados de Scanner:</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Qué hace</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>nextLine()</code></td>
+                        <td>Lee una línea completa de texto (incluye espacios)</td>
+                        <td><code>String texto = entrada.nextLine();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>next()</code></td>
+                        <td>Lee la siguiente palabra (se detiene en el primer espacio)</td>
+                        <td><code>String palabra = entrada.next();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>nextInt()</code></td>
+                        <td>Lee un número entero</td>
+                        <td><code>int numero = entrada.nextInt();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>nextDouble()</code></td>
+                        <td>Lee un número decimal</td>
+                        <td><code>double precio = entrada.nextDouble();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>nextBoolean()</code></td>
+                        <td>Lee un valor true/false</td>
+                        <td><code>boolean activo = entrada.nextBoolean();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>next().charAt(0)</code></td>
+                        <td>Lee un solo carácter</td>
+                        <td><code>char letra = entrada.next().charAt(0);</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Ejemplo completo:</h3>
+            <div class="code-block complete">                
+                <pre><code>import java.util.Scanner;
+
+public class EjemploScanner {
+    public static void main(String[] args) {
+        // Crear el objeto Scanner para leer desde el teclado
+        Scanner entrada = new Scanner(System.in);
+
+        // Pedir el nombre
+        System.out.print("¿Cómo te llamas? ");
+        String nombre = entrada.nextLine();
+
+        // Pedir la edad
+        System.out.print("¿Cuántos años tienes? ");
+        int edad = entrada.nextInt();
+
+        // Mostrar el resultado
+        System.out.println("Hola " + nombre + ", tienes " + edad + " años.");
+
+        // Cerrar el Scanner (importante para liberar recursos)
+        entrada.close();
+    }
+}</code></pre>
+            </div>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Problema común:</strong> Si usas <code>nextInt()</code> seguido de <code>nextLine()</code>, el <code>nextLine()</code> puede quedarse vacío. Esto ocurre porque <code>nextInt()</code> lee el número pero deja el "Enter" en la memoria temporal. <strong>Solución:</strong> Añade un <code>entrada.nextLine();</code> extra después de <code>nextInt()</code> para limpiar esa memoria.
+            </div>
+
+            <div class="info-box">
+                <h3>Ejemplo resolviendo el problema del Enter:</h3>
+                <div class="code-block snippet">
+                    <pre><code>System.out.print("¿Cuál es tu edad? ");
+int edad = entrada.nextInt();
+entrada.nextLine(); // ← Importante: limpiar el buffer
+
+System.out.print("¿Cuál es tu nombre? ");
+String nombre = entrada.nextLine(); // Ahora sí funciona correctamente</code></pre>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Footer (se cargará dinámicamente) -->
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        // Configuración específica de esta página
+        const PAGINA_CONFIG = {
+            id: 'entrada', 
+            titulo: 'Entrada y Salida de Datos', 
+            subtitulo: 'Usando System.out y Scanner'
+        };
+    </script>
+    
+    <!-- JavaScript principal -->
+    <script src="js/script.js"></script>
+</body>
+</html>
