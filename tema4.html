@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Arrays y ArrayList</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende a trabajar con arrays unidimensionales, multidimensionales y la clase ArrayList en Java.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="arrays-intro" class="content-section">
+            <h2><i class="fas fa-layer-group"></i> Arrays y ArrayList</h2>
+            <p>En esta sección aprenderás a manejar colecciones de datos en Java. Los <strong>arrays</strong> son estructuras de tamaño fijo que almacenan elementos del mismo tipo, mientras que <strong>ArrayList</strong> es una clase de la API de Java que permite crear listas dinámicas (redimensionables).</p>
+            <div class="info-box">
+                <h3>Conceptos clave</h3>
+                <ul>
+                    <li><strong>Array:</strong> Estructura de tamaño fijo, se declara con corchetes <code>[]</code>. Puede ser unidimensional o multidimensional.</li>
+                    <li><strong>ArrayList:</strong> Implementación de la interfaz <code>List</code> que puede crecer y reducirse automáticamente. Solo almacena objetos (no tipos primitivos directamente, usa clases envolventes). Es una lista de objetos de tipo genérico.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="arrays-unidimensionales" class="content-section">
+            <h2><i class="fas fa-arrows-alt-h"></i> Arrays Unidimensionales</h2>
+            <p>Un array unidimensional es una secuencia de elementos del mismo tipo accesibles mediante un índice (que comienza en 0).</p>
+            <p>Los arrays tienen un tamaño fijo que se define al crearlos. No se puede cambiar su tamaño una vez creado.</p>
+
+            <h3>Declaración y creación</h3>
+            <div class="code-block snippet">
+                <pre><code>// Declaración
+int[] numeros;          // más común
+String nombres[];       // también válido, pero menos usado
+
+// Creación (con tamaño fijo)
+numeros = new int[5];   // array de 5 enteros (inicializados a 0)
+
+// Declaración y creación en una línea
+int[] edades = new int[10];
+
+// Inicialización directa con valores
+int[] valores = {10, 20, 30, 40, 50};</code></pre>
+            </div>
+            
+            <h3>Acceso y modificación</h3>
+            <div class="code-block snippet">
+                <pre><code>int[] numeros = new int[3];
+numeros[0] = 100;
+numeros[1] = 200;
+numeros[2] = 300;
+System.out.println(numeros[1]); // Imprime 200</code></pre>
+            </div>
+
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Cuidado:</strong> Cuando se hace una inicialización directa con valores, el tamaño del array se determina automáticamente. No puedes agregar más elementos de los que se han definido en la inicialización. Si necesitas una colección de tamaño variable, considera usar <code>ArrayList</code>.   
+            </div>
+            
+            <h3>Recorrer un array</h3>
+            <div class="code-block snippet">
+                <pre><code>// Con bucle for clásico
+for (int i = 0; i < numeros.length; i++) {
+    System.out.println("Índice " + i + ": " + numeros[i]);
+}
+
+// Con bucle foreach (desde Java 5)
+for (int num : numeros) {
+    System.out.println("Valor: " + num);
+}</code></pre>
+            </div>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Cuidado:</strong> Los arrays tienen tamaño fijo. Si intentas acceder a un índice fuera del rango (menor que 0 o mayor o igual a <code>length</code>) se lanzará una excepción <code>ArrayIndexOutOfBoundsException</code>.
+            </div>
+        </section>
+
+        <section id="arrays-multidimensionales" class="content-section">
+            <h2><i class="fas fa-th"></i> Arrays Multidimensionales</h2>
+            <p>Son arrays de arrays, útiles para representar matrices, tablas, etc. Se declaran con dos o más pares de corchetes.</p>
+            
+            <h3>Ejemplo con matriz de 2x3</h3>
+            <div class="code-block snippet">
+                <pre><code>// Declaración y creación
+int[][] matriz = new int[2][3];  // 2 filas, 3 columnas
+
+// Asignación de valores
+matriz[0][0] = 1;
+matriz[0][1] = 2;
+matriz[0][2] = 3;
+matriz[1][0] = 4;
+matriz[1][1] = 5;
+matriz[1][2] = 6;
+
+// Inicialización directa
+int[][] matriz2 = {
+    {1, 2, 3},
+    {4, 5, 6}
+};
+
+// Recorrer una matriz
+for (int i = 0; i < matriz.length; i++) {          // filas
+    for (int j = 0; j < matriz[i].length; j++) {   // columnas
+        System.out.print(matriz[i][j] + " ");
+    }
+    System.out.println(); // salto de línea al final de cada fila
+}</code></pre>
+            </div>
+            <p>El ejemplo anterior recorre una matriz bidimensional e imprime cada elemento seguido de un espacio. Al final de cada fila, se imprime un salto de línea para mantener una estructura legible.</p>    
+            <p>Quedando así una representación visual de la matriz:</p>
+            <div class="code-block snippet">
+                <pre><code>1 2 3 
+4 5 6 </code></pre>
+            </div>  
+        </section>
+
+        <section id="arraylist" class="content-section">
+            <h2><i class="fas fa-list"></i> La clase ArrayList</h2>
+            <p><code>ArrayList</code> es una clase del paquete <code>java.util</code> que proporciona una lista redimensionable. A diferencia de los arrays, puede crecer o encogerse dinámicamente.</p>
+            
+            <div class="info-box">
+                <h3>Pasos para usar ArrayList:</h3>
+                <ol>
+                    <li>Importar la clase: <code>import java.util.ArrayList;</code></li>
+                    <li>Crear el ArrayList: <code>ArrayList&lt;Tipo&gt; lista = new ArrayList&lt;&gt;();</code></li>
+                    <li>Usar sus métodos para agregar, eliminar, acceder, etc.</li>
+                </ol>
+            </div>
+            
+            <h3>Métodos principales de ArrayList</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>add(elemento)</code></td>
+                        <td>Añade un elemento al final de la lista.</td>
+                        <td><code>lista.add("Hola");</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>add(índice, elemento)</code></td>
+                        <td>Inserta un elemento en la posición indicada.</td>
+                        <td><code>lista.add(1, "Mundo");</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get(índice)</code></td>
+                        <td>Devuelve el elemento en la posición especificada.</td>
+                        <td><code>String s = lista.get(0);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>set(índice, elemento)</code></td>
+                        <td>Reemplaza el elemento en la posición dada.</td>
+                        <td><code>lista.set(0, "Adiós");</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>remove(índice)</code></td>
+                        <td>Elimina el elemento en la posición indicada.</td>
+                        <td><code>lista.remove(1);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>remove(elemento)</code></td>
+                        <td>Elimina la primera ocurrencia del elemento especificado.</td>
+                        <td><code>lista.remove("Hola");</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>size()</code></td>
+                        <td>Devuelve el número de elementos de la lista.</td>
+                        <td><code>int tam = lista.size();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>clear()</code></td>
+                        <td>Elimina todos los elementos.</td>
+                        <td><code>lista.clear();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>isEmpty()</code></td>
+                        <td>Devuelve <code>true</code> si la lista está vacía.</td>
+                        <td><code>boolean vacia = lista.isEmpty();</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>contains(elemento)</code></td>
+                        <td>Devuelve <code>true</code> si la lista contiene el elemento.</td>
+                        <td><code>boolean tiene = lista.contains("Hola");</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>indexOf(elemento)</code></td>
+                        <td>Devuelve el índice de la primera aparición del elemento, o -1 si no está.</td>
+                        <td><code>int idx = lista.indexOf("Mundo");</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Ejemplo completo con ArrayList</h3>
+            <div class="code-block complete">
+                <pre><code>import java.util.ArrayList;
+
+public class EjemploArrayList {
+    public static void main(String[] args) {
+        // Crear un ArrayList de Strings
+        ArrayList&lt;String&gt; frutas = new ArrayList&lt;&gt;();
+
+        // Agregar elementos
+        frutas.add("Manzana");
+        frutas.add("Banana");
+        frutas.add("Cereza");
+        frutas.add(1, "Naranja"); // Insertar en la posición 1
+
+        System.out.println("Lista de frutas: " + frutas);
+
+        // Acceder a un elemento
+        String fruta = frutas.get(2);
+        System.out.println("Fruta en índice 2: " + fruta);
+
+        // Modificar un elemento
+        frutas.set(0, "Pera");
+        System.out.println("Después de modificar: " + frutas);
+
+        // Eliminar un elemento
+        frutas.remove(3); // Elimina "Cereza"
+        frutas.remove("Banana"); // Elimina "Banana"
+        System.out.println("Después de eliminar: " + frutas);
+
+        // Tamaño de la lista
+        System.out.println("Tamaño: " + frutas.size());
+
+        // Recorrer con foreach
+        for (String f : frutas) {
+            System.out.println("Fruta: " + f);
+        }
+
+        // Comprobar si contiene un elemento
+        if (frutas.contains("Pera")) {
+            System.out.println("Sí, hay Pera");
+        }
+
+        // Vaciar la lista
+        frutas.clear();
+        System.out.println("¿Está vacía? " + frutas.isEmpty());
+    }
+}</code></pre>
+            </div>
+            <div>
+                <p>En este ejemplo se muestra cómo crear un <code>ArrayList</code> de objetos de tipo <code>String</code>, agregar elementos, acceder a ellos, modificarlos, eliminarlos y recorrer la lista. También se demuestra cómo verificar si la lista contiene un elemento específico y cómo vaciar la lista por completo.</p>
+                <p>Crea la lista de frutas, agrega elementos, modifica uno de ellos y elimina otro. Finalmente, comprueba si existe el elemento "Pera" y borra la lista para verificar si está vacía.</p>
+            </div>
+
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Nota sobre tipos primitivos:</strong> <code>ArrayList</code> no puede almacenar tipos primitivos directamente (int, double, etc.). Debes usar las clases envolventes: <code>Integer</code>, <code>Double</code>, <code>Boolean</code>, etc. Java realiza autoboxing y unboxing automáticamente.
+                <div class="code-block snippet">
+                    <pre><code>ArrayList&lt;Integer&gt; numeros = new ArrayList&lt;&gt;();
+numeros.add(10); // autoboxing de int a Integer
+int valor = numeros.get(0); // unboxing de Integer a int</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="metodos-utiles" class="content-section">
+            <h2><i class="fas fa-tools"></i> Métodos útiles para arrays y ArrayList</h2>
+            <p>Java proporciona clases auxiliares como <code>Arrays</code> y <code>Collections</code> con métodos estáticos muy prácticos.</p>
+            
+            <h3>Clase <code>java.util.Arrays</code></h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>toString(array)</code></td>
+                        <td>Devuelve una representación en cadena del array.</td>
+                        <td><code>System.out.println(Arrays.toString(numeros));</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>sort(array)</code></td>
+                        <td>Ordena el array en orden ascendente.</td>
+                        <td><code>Arrays.sort(numeros);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>fill(array, valor)</code></td>
+                        <td>Rellena todo el array con el valor especificado.</td>
+                        <td><code>Arrays.fill(numeros, 0);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>copyOf(array, nuevaLongitud)</code></td>
+                        <td>Copia el array con la nueva longitud.</td>
+                        <td><code>int[] copia = Arrays.copyOf(original, 10);</code></td>
+                    </tr>                
+                </tbody>
+            </table>
+            
+            <h3>Clase <code>java.util.Collections</code> para ArrayList</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>sort(lista)</code></td>
+                        <td>Ordena la lista (sus elementos deben implementar <code>Comparable</code>).</td>
+                        <td><code>Collections.sort(lista);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>reverse(lista)</code></td>
+                        <td>Invierte el orden de la lista.</td>
+                        <td><code>Collections.reverse(lista);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>shuffle(lista)</code></td>
+                        <td>Desordena aleatoriamente la lista.</td>
+                        <td><code>Collections.shuffle(lista);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>max(lista)</code></td>
+                        <td>Devuelve el elemento máximo según el orden natural.</td>
+                        <td><code>String max = Collections.max(lista);</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>min(lista)</code></td>
+                        <td>Devuelve el elemento mínimo.</td>
+                        <td><code>String min = Collections.min(lista);</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="code-block snippet">
+                <pre><code>import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class EjemploMetodosUtiles {
+    public static void main(String[] args) {
+        // Con arrays
+        int[] numeros = {5, 2, 9, 1, 3};
+        Arrays.sort(numeros);
+        System.out.println(Arrays.toString(numeros)); // [1, 2, 3, 5, 9]
+
+        // Con ArrayList
+        ArrayList&lt;String&gt; nombres = new ArrayList&lt;&gt;();
+        nombres.add("Juan");
+        nombres.add("Ana");
+        nombres.add("Pedro");
+        Collections.sort(nombres);
+        System.out.println(nombres); // [Ana, Juan, Pedro]
+    }
+}</code></pre>
+            </div>
+            <div>
+                <p>En este ejemplo se muestra cómo usar métodos de las clases <code>Arrays</code> y <code>Collections</code> para ordenar, imprimir y manipular arrays y ArrayLists de manera eficiente.</p>
+            </div>
+        </section>
+
+        
+       
+    </main>
+    
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: "arrays-intro",
+            titulo: "Arrays y ArrayList",
+            subtitulo: "Estructuras de datos estáticas y dinámicas"
+        };
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
