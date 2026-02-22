@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Funciones (Métodos estáticos)</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende a crear y utilizar métodos estáticos en Java para organizar y reutilizar código.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="metodos-intro" class="content-section">
+            <h2><i class="fas fa-cube"></i> Métodos estáticos (funciones)</h2>
+            <p>Un <strong>método</strong> es un bloque de código que realiza una tarea específica y que puede ser invocado (llamado) desde otras partes del programa. Los métodos permiten organizar el código, reutilizarlo y facilitar su mantenimiento.</p>
+            <p>En esta sección nos centraremos en los <strong>métodos estáticos</strong>, aquellos que se declaran con la palabra clave <code>static</code> y pueden ser llamados sin necesidad de crear un objeto de la clase.</p>
+            
+            <div class="info-box">
+                <h3>¿Por qué usar métodos?</h3>
+                <ul>
+                    <li><strong>Reutilización:</strong> Escribes el código una vez y lo usas muchas veces.</li>
+                    <li><strong>Modularidad:</strong> Divides el programa en partes más pequeñas y manejables.</li>
+                    <li><strong>Legibilidad:</strong> El código se vuelve más claro y fácil de entender.</li>
+                    <li><strong>Mantenimiento:</strong> Si hay que corregir algo, solo se modifica en un lugar.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sintaxis" class="content-section">
+            <h2><i class="fas fa-code"></i> Sintaxis de un método estático</h2>
+            <p>La estructura general de un método estático en Java es:</p>
+            <div class="code-block warning-code">
+                <pre><code>modificador tipoRetorno nombreMetodo(parámetros) {
+    // cuerpo del método
+    return valor; // solo si tipoRetorno no es void
+}</code></pre>
+            </div>
+            
+            <h3>Componentes de un método:</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Parte</th>
+                        <th>Descripción</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>modificador</code></td>
+                        <td>Define la visibilidad y comportamiento. Para métodos estáticos usamos <code>public static</code> (u otros como <code>private</code>).</td>
+                        <td><code>public static</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>tipoRetorno</code></td>
+                        <td>Tipo de dato que devuelve el método. Si no devuelve nada, se usa <code>void</code>.</td>
+                        <td><code>int</code>, <code>String</code>, <code>void</code>, etc.</td>
+                    </tr>
+                    <tr>
+                        <td><code>nombreMetodo</code></td>
+                        <td>Identificador del método. Por convención, empieza con minúscula y usa camelCase.</td>
+                        <td><code>calcularSuma</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>parámetros</code></td>
+                        <td>Lista de variables que recibe el método (opcional). Se especifican como <code>tipo nombre</code> separados por comas.</td>
+                        <td><code>int a, int b</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>cuerpo</code></td>
+                        <td>Bloque de código entre llaves que contiene las instrucciones.</td>
+                        <td><code>{ return a + b; }</code></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>Ejemplo básico:</h3>
+            <div class="code-block complete">
+                <pre><code>public class EjemploMetodo {
+    
+    // Método estático que suma dos enteros y devuelve el resultado
+    public static int sumar(int a, int b) {
+        return a + b;
+    }
+    
+    // Método estático que no devuelve nada (void) y solo imprime un mensaje
+    public static void saludar(String nombre) {
+        System.out.println("Hola, " + nombre);
+    }
+    
+    public static void main(String[] args) {
+        int resultado = sumar(5, 3);
+        System.out.println("La suma es: " + resultado);
+        
+        saludar("Ana");
+    }
+}</code></pre>
+            </div>
+        </section>
+
+        <p>En el ejemplo anterior, el método <code>sumar</code> recibe dos enteros, los suma y devuelve el resultado. El método <code>saludar</code> recibe un nombre y lo imprime en pantalla, sin devolver ningún valor.</p>
+
+        <section id="metodos-con-retorno" class="content-section">
+            <h2><i class="fas fa-arrow-left"></i> Métodos que retornan un valor</h2>
+            <p>Un método puede devolver un valor de cualquier tipo (primitivo u objeto) usando la palabra clave <code>return</code>. El tipo de retorno debe coincidir con el declarado.</p>
+            <div class="code-block snippet">
+                <pre><code>public static int obtenerMaximo(int a, int b) {
+    if (a > b) {
+        return a;
+    } else {
+        return b;
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el método <code>obtenerMaximo</code> compara dos enteros y devuelve el mayor de ellos.</p>
+            
+            <h3>Ejemplo con String:</h3>
+            <div class="code-block snippet">
+                <pre><code>public static String crearSaludo(String nombre) {
+    return "Bienvenido, " + nombre;
+}</code></pre>
+            </div>
+            <p>Este método recibe un nombre y devuelve un saludo personalizado. Si se llama con un nombre vacío o null, podría devolver un saludo genérico. En el caso de que nombre tenga un valor, se devuelve el saludo con ese nombre.</p>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Si el método declara un tipo de retorno distinto de <code>void</code>, TODAS las rutas de ejecución deben devolver un valor. El siguiente código daría error de compilación porque falta el <code>return</code> en el caso de que la condición sea falsa:
+                <pre><code>public static int dividir(int a, int b) {
+    if (b != 0) {
+        return a / b;
+    }
+    // Error: falta return si b == 0
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="metodos-void" class="content-section">
+            <h2><i class="fas fa-ban"></i> Métodos void (sin retorno)</h2>
+            <p>Los métodos declarados con <code>void</code> no devuelven ningún valor. Se usan para realizar acciones (como imprimir, modificar variables, etc.). Pueden usar <code>return;</code> para salir anticipadamente, pero sin devolver valor.</p>
+            <div class="code-block snippet">
+                <pre><code>public static void mostrarMenu() {
+    System.out.println("1. Sumar");
+    System.out.println("2. Restar");
+    System.out.println("3. Salir");
+}
+
+public static void procesarOpcion(int opcion) {
+    if (opcion == 3) {
+        System.out.println("Adiós");
+        return; // sale del método sin ejecutar el resto
+    }
+    System.out.println("Opción elegida: " + opcion);
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el método <code>mostrarMenu</code> simplemente imprime un menú en pantalla. El método <code>procesarOpcion</code> procesa la opción elegida por el usuario y puede salir anticipadamente si se elige la opción de salir.</p>
+
+        </section>
+
+        <section id="parametros" class="content-section">
+            <h2><i class="fas fa-plug"></i> Parámetros y argumentos</h2>
+            <p>Los <strong>parámetros</strong> son las variables que se definen en la declaración del método. Los <strong>argumentos</strong> son los valores reales que se pasan al invocar el método.</p>
+            
+            <h3>Paso por valor</h3>
+            <p>En Java, todos los parámetros se pasan <strong>por valor</strong>. Esto significa que se crea una copia del argumento dentro del método. Los cambios en el parámetro no afectan a la variable original (excepto cuando se pasan objetos, porque la copia de la referencia sigue apuntando al mismo objeto).</p>
+            
+            <div class="code-block snippet">
+                <pre><code>public static void incrementar(int numero) {
+    numero++; // solo modifica la copia local
+    System.out.println("Dentro: " + numero);
+}
+
+public static void main(String[] args) {
+    int x = 5;
+    incrementar(x);
+    System.out.println("Fuera: " + x); // sigue siendo 5
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el método <code>incrementar</code> recibe un entero y lo incrementa. Sin embargo, la variable original <code>x</code> en el método <code>main</code> no cambia porque se pasó una copia del valor.</p>
+
+            <h3>Parámetros de tipo objeto</h3>
+            <div class="code-block snippet">
+                <pre><code>public static void cambiarNombre(Persona p) {
+    p.setNombre("Carlos"); // modifica el objeto original
+}
+
+// Si intentamos reasignar la referencia, no afecta fuera:
+public static void reasignar(Persona p) {
+    p = new Persona("Nuevo"); // p apunta a otro objeto, pero la referencia original no cambia
+}</code></pre>
+            </div>
+            <p>En este caso, el método <code>cambiarNombre</code> modifica el objeto al que apunta la referencia, por lo que el cambio es visible fuera del método. Sin embargo, el método <code>reasignar</code> intenta cambiar la referencia a un nuevo objeto, pero esto no afecta a la referencia original que se pasó como argumento.</p>
+            <p>Por tanto, el resultado del método <code>reasignar</code> no afecta a la variable original que se pasó como argumento.</p>
+            <div class="info-box">
+                <p><strong>Conclusión:</strong> Para tipos primitivos, el método trabaja con una copia. Para objetos, la copia de la referencia permite modificar el objeto, pero no reasignar la referencia original.</p>
+            </div>
+        </section>
+
+        <section id="ambito" class="content-section">
+            <h2><i class="fas fa-globe"></i> Ámbito de las variables</h2>
+            <p>El <strong>ámbito</strong> (scope) de una variable determina dónde puede ser utilizada.</p>
+            <ul>
+                <li><strong>Variables locales:</strong> Declaradas dentro de un método o bloque. Solo existen dentro de ese bloque.</li>
+                <li><strong>Variables de clase (estáticas):</strong> Declaradas con <code>static</code> fuera de cualquier método. Pertenecen a la clase y son accesibles desde cualquier método estático.</li>
+            </ul>
+            
+            <div class="code-block snippet">
+                <pre><code>public class EjemploAmbito {
+    static int contador = 0; // variable de clase (estática)
+    
+    public static void metodo() {
+        int local = 10; // variable local
+        System.out.println(local);
+        System.out.println(contador); // se puede acceder
+    }
+    
+    public static void main(String[] args) {
+        // System.out.println(local); // ERROR: local no existe aquí
+        System.out.println(contador); // OK
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, la variable <code>contador</code> es una variable de clase (estática) y puede ser accedida desde cualquier método estático. La variable <code>local</code> es una variable local al método <code>metodo</code> y no puede ser accedida desde el método <code>main</code>.</p>
+        </section>
+
+        <section id="sobrecarga" class="content-section">
+            <h2><i class="fas fa-balance-scale"></i> Sobrecarga de métodos</h2>
+            <p>La <strong>sobrecarga</strong> (overloading) permite tener varios métodos con el mismo nombre pero distintos parámetros (número, tipo u orden). El compilador decide cuál invocar según los argumentos.</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class Calculadora {
+    
+    // Suma de dos enteros
+    public static int sumar(int a, int b) {
+        return a + b;
+    }
+    
+    // Suma de tres enteros
+    public static int sumar(int a, int b, int c) {
+        return a + b + c;
+    }
+    
+    // Suma de dos doubles
+    public static double sumar(double a, double b) {
+        return a + b;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(sumar(2, 3));       // llama al primero
+        System.out.println(sumar(2, 3, 4));    // llama al segundo
+        System.out.println(sumar(2.5, 3.7));   // llama al tercero
+    }
+}</code></pre>
+            </div>
+            <p>El metodo sumar se sobrecarga con diferentes tipos de parámetros. El compilador decide cuál invocar según los argumentos pasados al método.</p>
+
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> La sobrecarga no se basa en el tipo de retorno. Dos métodos con el mismo nombre y parámetros pero distinto tipo de retorno causan error de compilación.
+            </div>
+        </section>
+
+        <section id="ejemplos-completos" class="content-section">
+            <h2><i class="fas fa-project-diagram"></i> Ejemplos completos</h2>
+            
+            <h3>Ejemplo 1: Validación de datos</h3>
+            <div class="code-block complete">
+                <pre><code>import java.util.Scanner;
+
+public class Validacion {
+    
+    public static boolean esMayorEdad(int edad) {
+        return edad >= 18;
+    }
+    
+    public static String obtenerCategoria(int edad) {
+        if (edad < 12) return "Niño";
+        else if (edad < 18) return "Adolescente";
+        else if (edad < 65) return "Adulto";
+        else return "Jubilado";
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa tu edad: ");
+        int edad = sc.nextInt();
+        
+        if (esMayorEdad(edad)) {
+            System.out.println("Eres mayor de edad.");
+        } else {
+            System.out.println("Eres menor de edad.");
+        }
+        
+        System.out.println("Categoría: " + obtenerCategoria(edad));
+        sc.close();
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el programa pide al usuario su edad y utiliza dos métodos para validar si es mayor de edad y para obtener su categoría según la edad.</p>
+            <p>La variable edad es una variable local al método <code>main</code>, por lo que solo puede ser accedida dentro de ese método. Los métodos <code>esMayorEdad</code> y <code>obtenerCategoria</code> reciben la edad como parámetro y devuelven valores según la lógica definida en cada método.</p>
+            <p>En cada uno de los métodos la variable edad es una variable local que no afecta a la variable original en el método <code>main</code>.</p>
+            
+            <h3>Ejemplo 2: Menú con funciones</h3>
+            <div class="code-block complete">
+                <pre><code>import java.util.Scanner;
+
+public class MenuFunciones {
+    
+    public static void mostrarMenu() {
+        System.out.println("\n--- CALCULADORA ---");
+        System.out.println("1. Sumar");
+        System.out.println("2. Restar");
+        System.out.println("3. Multiplicar");
+        System.out.println("4. Dividir");
+        System.out.println("5. Salir");
+        System.out.print("Elige una opción: ");
+    }
+    
+    public static double sumar(double a, double b) {
+        return a + b;
+    }
+    
+    public static double restar(double a, double b) {
+        return a - b;
+    }
+    
+    public static double multiplicar(double a, double b) {
+        return a * b;
+    }
+    
+    public static double dividir(double a, double b) {
+        if (b == 0) {
+            System.out.println("Error: división por cero.");
+            return Double.NaN; // Not a Number
+        }
+        return a / b;
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int opcion;
+        double a, b;
+        
+        do {
+            mostrarMenu();
+            opcion = sc.nextInt();
+            
+            if (opcion >= 1 && opcion <= 4) {
+                System.out.print("Ingresa dos números: ");
+                a = sc.nextDouble();
+                b = sc.nextDouble();
+                
+                switch (opcion) {
+                    case 1:
+                        System.out.println("Resultado: " + sumar(a, b));
+                        break;
+                    case 2:
+                        System.out.println("Resultado: " + restar(a, b));
+                        break;
+                    case 3:
+                        System.out.println("Resultado: " + multiplicar(a, b));
+                        break;
+                    case 4:
+                        System.out.println("Resultado: " + dividir(a, b));
+                        break;
+                }
+            } else if (opcion != 5) {
+                System.out.println("Opción no válida.");
+            }
+        } while (opcion != 5);
+        
+        System.out.println("¡Hasta luego!");
+        sc.close();
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, se implementa una calculadora simple con un menú. Cada operación (sumar, restar, multiplicar, dividir) se implementa como un método estático separado. El programa controla la división por cero y permite al usuario elegir la operación que desea realizar.</p>
+        </section>
+        
+    </main>
+    
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: "metodos-intro",
+            titulo: "Funciones (Métodos estáticos)",
+            subtitulo: "Organiza y reutiliza tu código"
+        };
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
