@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Clases y Programación Orientada a Objetos</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende los fundamentos de la Programación Orientada a Objetos en Java: clases, objetos, atributos, métodos, constructores y encapsulamiento.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="poo-intro" class="content-section">
+            <h2><i class="fas fa-cube"></i> Programación Orientada a Objetos (POO)</h2>
+            <p>La <strong>Programación Orientada a Objetos (POO)</strong> es un paradigma de programación que organiza el código en torno a "objetos", los cuales contienen datos (atributos) y métodos (funciones) que operan sobre esos datos. Java es un lenguaje orientado a objetos, y todo su código debe estar dentro de clases.</p>
+            
+            <div class="info-box">
+                <h3>Conceptos fundamentales</h3>
+                <ul>
+                    <li><strong>Clase:</strong> Es una plantilla o molde que define los atributos y métodos que tendrán los objetos de ese tipo. Por ejemplo, la clase <code>Coche</code> define que todo coche tiene marca, modelo y color, y puede arrancar y frenar.</li>
+                    <li><strong>Objeto:</strong> Es una instancia concreta de una clase. Por ejemplo, un coche específico: "Ford Focus rojo".</li>
+                    <li><strong>Atributo (o campo):</strong> Variable que pertenece a la clase y representa una característica del objeto.</li>
+                    <li><strong>Método:</strong> Función definida dentro de la clase que describe un comportamiento de los objetos.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="declaracion-clase" class="content-section">
+            <h2><i class="fas fa-file-code"></i> Declaración de una clase</h2>
+            <p>Una clase se define con la palabra clave <code>class</code> seguida del nombre con un formato CamelCase (Primera letra en mayúscula seguida de minuscula). Dentro de las llaves se colocan los atributos y métodos.</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class Persona {
+    // Atributos (variables de instancia)
+    String nombre;
+    int edad;
+    
+    // Métodos
+    public void saludar() {
+        System.out.println("Hola, soy " + nombre);
+    }
+}</code></pre>
+            </div>
+            
+            <p>En este ejemplo, hemos definido una clase <code>Persona</code> con dos atributos (<code>nombre</code> y <code>edad</code>) y un método <code>saludar()</code> que imprime un saludo.</p>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Por ahora los atributos no tienen modificador de acceso, lo que significa que son <em>package-private</em> (accesibles desde cualquier clase del mismo paquete). Más adelante veremos encapsulamiento con <code>private</code>.
+            </div>
+        </section>
+
+        <section id="creacion-objetos" class="content-section">
+            <h2><i class="fas fa-plus-circle"></i> Creación de objetos (instanciación)</h2>
+            <p>Para crear un objeto (instancia) de una clase se usa el operador <code>new</code> seguido del constructor de la clase. Una vez creado, podemos acceder a sus atributos y métodos usando el operador punto <code>.</code>.</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class EjemploPersona {
+    public static void main(String[] args) {
+        // Crear un objeto de la clase Persona
+        Persona persona1 = new Persona();
+        
+        // Asignar valores a los atributos
+        persona1.nombre = "Ana";
+        persona1.edad = 25;
+        
+        // Llamar a un método
+        persona1.saludar();  // Imprime: Hola, soy Ana
+        
+        // Podemos crear otro objeto independiente
+        Persona persona2 = new Persona();
+        persona2.nombre = "Carlos";
+        persona2.edad = 30;
+        persona2.saludar();  // Imprime: Hola, soy Carlos
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, hemos creado dos objetos de la clase <code>Persona</code>, cada uno con sus propios valores para los atributos. Al llamar al método <code>saludar()</code>, cada objeto muestra su propio nombre.</p>
+            <p>Cada objeto tiene sus propios valores para los atributos. Modificar los atributos de un objeto no afecta a los demás.</p>
+        </section>
+
+        <section id="constructores" class="content-section">
+            <h2><i class="fas fa-hammer"></i> Constructores</h2>
+            <p>Un <strong>constructor</strong> es un método especial que se ejecuta automáticamente al crear un objeto con <code>new</code>. Su misión es inicializar el objeto, normalmente asignando valores iniciales a los atributos. Tiene el mismo nombre que la clase y no devuelve ningún valor (ni siquiera <code>void</code>).</p>
+            
+            <h3>Constructor por defecto</h3>
+            <p>Si no definimos ningún constructor, Java proporciona uno por defecto sin parámetros que no hace nada (los atributos se inicializan con valores por defecto: <code>null</code> para objetos, <code>0</code> para números, <code>false</code> para booleanos).</p>
+            
+            <h3>Constructor con parámetros</h3>
+            <p>Podemos definir nuestros propios constructores para inicializar los atributos con valores específicos.</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class Persona {
+    String nombre;
+    int edad;
+    
+    // Constructor con parámetros
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;  // this.nombre se refiere al atributo, nombre al parámetro
+        this.edad = edad;
+    }
+    
+    public void saludar() {
+        System.out.println("Hola, soy " + nombre + " y tengo " + edad + " años.");
+    }
+}
+
+// Uso en main:
+Persona p = new Persona("Luis", 22);
+p.saludar();</code></pre>
+            </div>
+            <p>En este ejemplo, el constructor de la clase <code>Persona</code> recibe dos parámetros para inicializar los atributos <code>nombre</code> y <code>edad</code>. Al crear un nuevo objeto con <code>new Persona("Luis", 22)</code>, se asignan esos valores a los atributos del objeto.</p>
+            <p>De este modo, cada objeto creado con el constructor tiene sus propios valores para los atributos. Y por consiguiente, no puede haber un objeto con el valor nulo para los atributos ya que se inicializan con valores específicos.</p>
+
+            <div class="info-box">
+                <h3>La palabra clave <code>this</code></h3>
+                <p><code>this</code> es una referencia al objeto actual. Se usa para distinguir entre los parámetros del constructor y los atributos de la clase cuando tienen el mismo nombre. También se puede usar para llamar a otro constructor de la misma clase (con <code>this(...)</code>).</p>
+            </div>
+            
+            <h3>Sobrecarga de constructores</h3>
+            <p>Al igual que los métodos, los constructores pueden sobrecargarse, es decir, tener varios con distintos parámetros.</p>
+            
+            <div class="code-block snippet">
+                <pre><code>public class Persona {
+    String nombre;
+    int edad;
+    
+    // Constructor sin parámetros (por si queremos crear persona y luego asignar)
+    public Persona() {
+        this.nombre = "Desconocido";
+        this.edad = 0;
+    }
+    
+    public Persona(String nombre) {
+        this.nombre = nombre;
+        this.edad = 18;  // edad por defecto
+    }
+    
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, la clase <code>Persona</code> tiene tres constructores: uno sin parámetros, otro con un solo parámetro y otro con dos parámetros. Esto nos da flexibilidad para crear objetos de diferentes formas según nuestras necesidades.</p>
+            
+        </section>
+
+        <section id="encapsulamiento" class="content-section">
+            <h2><i class="fas fa-shield-alt"></i> Encapsulamiento: modificadores de acceso</h2>
+            <p>El <strong>encapsulamiento</strong> es uno de los pilares de la POO. Consiste en ocultar los detalles internos de un objeto y permitir el acceso solo a través de métodos controlados. Para ello se usan los modificadores de acceso:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Modificador</th>
+                        <th>Accesible desde</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>private</code></td>
+                        <td>Solo dentro de la misma clase.</td>
+                    </tr>
+                    <tr>
+                        <td><code>public</code></td>
+                        <td>Desde cualquier clase.</td>
+                    </tr>
+                    <tr>
+                        <td><code>protected</code></td>
+                        <td>Dentro del mismo paquete y subclases (lo veremos más adelante).</td>
+                    </tr>
+                    <tr>
+                        <td><em>(sin modificador)</em></td>
+                        <td>Package-private: accesible solo desde clases del mismo paquete.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p>Lo habitual es declarar los atributos como <code>private</code> y proporcionar métodos públicos <strong>getters</strong> (para obtener el valor) y <strong>setters</strong> (para modificarlo, si es necesario).</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class Persona {
+    private String nombre;
+    private int edad;
+    
+    // Constructor
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        setEdad(edad);  // usamos el setter para validar
+    }
+    
+    // Getter para nombre
+    public String getNombre() {
+        return nombre;
+    }
+    
+    // Setter para nombre
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    // Getter para edad
+    public int getEdad() {
+        return edad;
+    }
+    
+    // Setter para edad con validación
+    public void setEdad(int edad) {
+        if (edad >= 0 && edad <= 150) {
+            this.edad = edad;
+        } else {
+            System.out.println("Edad no válida");
+        }
+    }
+    
+    public void saludar() {
+        System.out.println("Hola, soy " + nombre);
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, los atributos <code>nombre</code> y <code>edad</code> están declarados como <code>private</code>, lo que significa que no pueden ser accedidos directamente desde fuera de la clase. Para acceder a ellos, se utilizan métodos públicos llamados <strong>getters</strong> y <strong>setters</strong>.</p>
+            
+            <p>Beneficios del encapsulamiento:</p>
+            <ul>
+                <li>Controlamos cómo se accede y modifica los datos (podemos añadir validaciones).</li>
+                <li>Podemos cambiar la implementación interna sin afectar a quienes usan la clase.</li>
+                <li>Ocultamos la complejidad y exponemos solo lo necesario.</li>
+            </ul>
+        </section>
+
+        <section id="metodos-instancia" class="content-section">
+            <h2><i class="fas fa-cogs"></i> Métodos de instancia</h2>
+            <p>Los métodos de instancia son aquellos que no tienen la palabra clave <code>static</code> y operan sobre los atributos de un objeto concreto. Pueden acceder directamente a los atributos (incluso privados) y llamar a otros métodos de instancia.</p>
+            
+            <div class="code-block snippet">
+                <pre><code>public class Calculadora {
+    private double memoria;
+    
+    public void sumar(double valor) {
+        memoria += valor;
+    }
+    
+    public void restar(double valor) {
+        memoria -= valor;
+    }
+    
+    public double getMemoria() {
+        return memoria;
+    }
+    
+    public void reset() {
+        memoria = 0;
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, la clase <code>Calculadora</code> tiene un atributo privado <code>memoria</code> y varios métodos de instancia para sumar, restar, obtener el valor de memoria y resetearla.</p>
+
+            <p>Para usar estos métodos necesitamos un objeto:</p>
+            <div class="code-block snippet">
+                <pre><code>Calculadora calc = new Calculadora();
+calc.sumar(10);
+calc.sumar(5);
+System.out.println(calc.getMemoria()); // 15</code></pre>
+            </div>
+            <p>En este caso, hemos creado un objeto <code>calc</code> de la clase <code>Calculadora</code> y hemos llamado a sus métodos para realizar operaciones. Cada objeto de la clase <code>Calculadora</code> tendrá su propia memoria independiente.</p>
+        </section>
+
+        <section id="ejemplo-completo" class="content-section">
+            <h2><i class="fas fa-project-diagram"></i> Ejemplo completo: Clase Coche</h2>
+            <p>Vamos a crear una clase <code>Coche</code> con atributos privados, constructores, getters/setters y un método que muestre información.</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class Coche {
+    private String marca;
+    private String modelo;
+    private int velocidad;  // km/h
+    
+    // Constructor por defecto
+    public Coche() {
+        this.marca = "Desconocida";
+        this.modelo = "Desconocido";
+        this.velocidad = 0;
+    }
+    
+    // Constructor con parámetros
+    public Coche(String marca, String modelo) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.velocidad = 0;
+    }
+    
+    // Getters y Setters
+    public String getMarca() {
+        return marca;
+    }
+    
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+    
+    public String getModelo() {
+        return modelo;
+    }
+    
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+    
+    public int getVelocidad() {
+        return velocidad;
+    }
+    
+    // Métodos de comportamiento
+    public void acelerar(int incremento) {
+        if (incremento > 0) {
+            velocidad += incremento;
+            System.out.println("Acelerando... Velocidad actual: " + velocidad + " km/h");
+        }
+    }
+    
+    public void frenar(int decremento) {
+        if (decremento > 0 && velocidad - decremento >= 0) {
+            velocidad -= decremento;
+            System.out.println("Frenando... Velocidad actual: " + velocidad + " km/h");
+        } else {
+            System.out.println("No se puede frenar tanto");
+        }
+    }
+    
+    public void mostrarInfo() {
+        System.out.println("Coche: " + marca + " " + modelo + ", velocidad: " + velocidad + " km/h");
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, la clase <code>Coche</code> tiene atributos privados y métodos públicos para manipularlos. Cada objeto de la clase <code>Coche</code> tiene sus propios valores para los atributos.</p>
+
+            <h3>Programa principal que usa la clase</h3>
+            <div class="code-block complete">
+                <pre><code>public class TestCoche {
+    public static void main(String[] args) {
+        Coche coche1 = new Coche("Ford", "Focus");
+        coche1.mostrarInfo();  // Coche: Ford Focus, velocidad: 0 km/h
+        
+        coche1.acelerar(50);
+        coche1.acelerar(20);
+        coche1.frenar(30);
+        coche1.mostrarInfo();  // Coche: Ford Focus, velocidad: 40 km/h
+        
+        // Uso de setter para cambiar la marca
+        coche1.setMarca("Seat");
+        coche1.mostrarInfo();  // Coche: Seat Focus, velocidad: 40 km/h
+        
+        // Crear otro coche con constructor por defecto
+        Coche coche2 = new Coche();
+        coche2.mostrarInfo();  // Coche: Desconocida Desconocido, velocidad: 0 km/h
+    }
+}</code></pre>
+            </div>
+            <p>En este programa principal, hemos creado un objeto <code>coche1</code> de la clase <code>Coche</code> usando el constructor con parámetros, y luego hemos llamado a sus métodos para mostrar información, acelerar y frenar. También hemos creado otro objeto <code>coche2</code> usando el constructor por defecto.</p>
+        </section>        
+    </main>
+    
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: "poo-intro",
+            titulo: "Clases y Programación Orientada a Objetos",
+            subtitulo: "Fundamentos de la POO en Java"
+        };
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

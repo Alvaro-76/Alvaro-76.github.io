@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Herencia y Polimorfismo</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende los conceptos de herencia y polimorfismo en Java: extends, super, sobrescritura de métodos y cómo aprovechar el polimorfismo.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="herencia-intro" class="content-section">
+            <h2><i class="fas fa-sitemap"></i> Herencia</h2>
+            <p>La <strong>herencia</strong> es uno de los pilares fundamentales de la Programación Orientada a Objetos. Permite crear una nueva clase a partir de una clase existente, heredando sus atributos y métodos, y añadiendo o modificando lo que sea necesario.</p>
+            <p>En Java, la herencia se implementa con la palabra clave <code>extends</code>. La clase que hereda se llama <strong>subclase</strong> (o clase hija) y la clase de la que se hereda se llama <strong>superclase</strong> (o clase padre).</p>
+            
+            <div class="info-box">
+                <h3>Conceptos clave</h3>
+                <ul>
+                    <li><strong>Superclase (clase padre):</strong> Clase de la que se hereda.</li>
+                    <li><strong>Subclase (clase hija):</strong> Clase que hereda de la superclase.</li>
+                    <li><strong>Reutilización:</strong> La subclase puede usar los métodos y atributos públicos y protegidos de la superclase.</li>
+                    <li><strong>Extensión:</strong> La subclase puede añadir nuevos atributos y métodos, o modificar los heredados (sobrescritura).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sintaxis-extends" class="content-section">
+            <h2><i class="fas fa-code-branch"></i> Sintaxis básica: <code>extends</code></h2>
+            <p>Para que una clase herede de otra se usa <code>extends</code> en la declaración de la clase.</p>
+            
+            <div class="code-block complete">
+                <pre><code>// Superclase
+public class Animal {
+    String nombre;
+    
+    public void comer() {
+        System.out.println(nombre + " está comiendo.");
+    }
+}
+
+// Subclase
+public class Perro extends Animal {
+    public void ladrar() {
+        System.out.println(nombre + " dice: ¡Guau!");
+    }
+}</code></pre>
+            </div>
+            
+            <p>Ahora <code>Perro</code> tiene el atributo <code>nombre</code> y el método <code>comer()</code> heredados de <code>Animal</code>, además de su propio método <code>ladrar()</code>.</p>
+            
+            <div class="code-block snippet">
+                <pre><code>public class TestHerencia {
+    public static void main(String[] args) {
+        Perro miPerro = new Perro();
+        miPerro.nombre = "Bobby";
+        miPerro.comer();  // Bobby está comiendo.
+        miPerro.ladrar(); // Bobby dice: ¡Guau!
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, <code>miPerro</code> puede usar tanto el método <code>comer()</code> heredado de <code>Animal</code> como su propio método <code>ladrar()</code>.</p>
+        </section>
+
+        <section id="superclase-object" class="content-section">
+            <h2><i class="fas fa-crown"></i> La clase <code>Object</code></h2>
+            <div class="info-box">
+                <p>En Java, todas las clases heredan directa o indirectamente de la clase <code>java.lang.Object</code>. Esto significa que cualquier objeto tiene disponibles algunos métodos heredados de <code>Object</code>, como:</p>
+                <ul>
+                    <li><code>toString()</code>: devuelve una representación en cadena del objeto.</li>
+                    <li><code>equals(Object obj)</code>: compara si dos objetos son "iguales".</li>
+                    <li><code>hashCode()</code>: devuelve un código hash del objeto.</li>
+                    <li><code>getClass()</code>: devuelve la clase del objeto.</li>
+                </ul>
+            </div>
+            
+            <h3>Sobrescribir <code>toString()</code></h3>
+            <p>Es muy común sobrescribir <code>toString()</code> para que devuelva información útil de nuestros objetos.</p>
+            
+            <div class="code-block snippet">
+                <pre><code>public class Persona {
+    private String nombre;
+    private int edad;
+    
+    public Persona(String nombre, int edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+    
+    @Override
+    public String toString() {
+        return "Persona{nombre='" + nombre + "', edad=" + edad + "}";
+    }
+}
+
+// Uso:
+Persona p = new Persona("Ana", 25);
+System.out.println(p);  // Imprime: Persona{nombre='Ana', edad=25}</code></pre>
+            </div>
+            <p>Al sobrescribir <code>toString()</code>, al imprimir el objeto <code>p</code> obtenemos una representación legible en lugar de la salida por defecto que muestra la clase y el hash.</p>
+            <p>Mostrando por consola el objeto <code>p</code> que se verá algo como: <code>Persona{nombre='Ana', edad=25}</code></p>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Nota:</strong> La anotación <code>@Override</code> es opcional pero muy recomendable. Indica que estamos sobrescribiendo un método de la superclase y el compilador comprobará que realmente exista ese método en la superclase.
+            </div>
+        </section>
+
+        <section id="super-constructor" class="content-section">
+            <h2><i class="fas fa-arrow-up"></i> Llamar al constructor de la superclase: <code>super()</code></h2>
+            <p>Cuando se crea un objeto de una subclase, siempre se ejecuta primero el constructor de la superclase (para inicializar la parte heredada). Si no se hace explícitamente, Java llama automáticamente al constructor sin parámetros de la superclase.</p>
+            <p>Podemos llamar explícitamente a un constructor específico de la superclase usando <code>super(...)</code> como primera instrucción en el constructor de la subclase.</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class Animal {
+    String nombre;
+    
+    public Animal(String nombre) {
+        this.nombre = nombre;
+    }
+}
+
+public class Perro extends Animal {
+    String raza;
+    
+    public Perro(String nombre, String raza) {
+        super(nombre);  // llama al constructor de Animal con un String
+        this.raza = raza;
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el constructor de <code>Perro</code> llama a <code>super(nombre)</code> para inicializar el atributo heredado <code>nombre</code> en la superclase <code>Animal</code>.</p>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Si la superclase no tiene un constructor sin parámetros, la subclase <strong>debe</strong> llamar explícitamente a <code>super(...)</code> con los parámetros adecuados. De lo contrario, el compilador mostrará un error.
+            </div>
+        </section>
+
+        <section id="sobrescritura" class="content-section">
+            <h2><i class="fas fa-pen"></i> Sobrescritura de métodos (Override)</h2>
+            <p>La <strong>sobrescritura</strong> permite a una subclase proporcionar una implementación específica de un método que ya está definido en su superclase. El método en la subclase debe tener el mismo nombre, tipo de retorno y parámetros (la firma debe ser idéntica).</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class Animal {
+    public void hacerSonido() {
+        System.out.println("El animal hace un sonido");
+    }
+}
+
+public class Perro extends Animal {
+    @Override
+    public void hacerSonido() {
+        System.out.println("El perro ladra: ¡Guau!");
+    }
+}
+
+public class Gato extends Animal {
+    @Override
+    public void hacerSonido() {
+        System.out.println("El gato maúlla: ¡Miau!");
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, tanto <code>Perro</code> como <code>Gato</code> sobrescriben el método <code>hacerSonido()</code> de la clase <code>Animal</code> para proporcionar un comportamiento específico.</p>
+            
+            <p>Ahora, dependiendo del tipo de objeto, se ejecutará el método sobrescrito correspondiente:</p>
+            <div class="code-block snippet">
+                <pre><code>Animal miAnimal = new Perro();
+miAnimal.hacerSonido(); // "El perro ladra: ¡Guau!"
+
+miAnimal = new Gato();
+miAnimal.hacerSonido(); // "El gato maúlla: ¡Miau!"</code></pre>
+            </div>
+        </section>
+
+        <section id="polimorfismo" class="content-section">
+            <h2><i class="fas fa-rotate"></i> Polimorfismo</h2>
+            <p>El <strong>polimorfismo</strong> (del griego "muchas formas") es la capacidad de un objeto para comportarse de diferentes maneras según el contexto.</p>
+            <div class="info-box">    
+                En Java, el polimorfismo se manifiesta principalmente de dos formas:</p>
+                <ul>
+                    <li><strong>Sobrecarga (overloading):</strong> varios métodos con el mismo nombre pero diferentes parámetros.</li>
+                    <li><strong>Sobrescritura (overriding):</strong> una subclase proporciona una implementación específica de un método de la superclase.</li>
+                </ul>
+                <p>El polimorfismo por sobrescritura nos permite tratar objetos de distintas subclases como si fueran de la superclase, y en tiempo de ejecución se llamará al método adecuado según el tipo real del objeto.</p>
+            </div>
+
+            <div class="code-block complete">
+                <pre><code>public class Main {
+    public static void main(String[] args) {
+        // Array de tipo Animal que contiene objetos de distintas subclases
+        Animal[] animales = new Animal[3];
+        animales[0] = new Perro();
+        animales[1] = new Gato();
+        animales[2] = new Perro();
+        
+        // Llamada polimórfica: cada animal hace su propio sonido
+        for (Animal a : animales) {
+            a.hacerSonido();  // Se ejecuta el método sobrescrito correspondiente
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, aunque el array es de tipo <code>Animal</code>, cada elemento puede ser un <code>Perro</code> o un <code>Gato</code>. Al llamar a <code>hacerSonido()</code>, se ejecutará la versión sobrescrita del método según el tipo real del objeto, demostrando el polimorfismo.</p>
+            
+            <p>Esto es muy potente porque podemos escribir código que trabaje con la superclase y automáticamente funcionará con cualquier subclase que exista o se cree en el futuro.</p>
+        </section>
+
+        <section id="instanceof" class="content-section">
+            <h2><i class="fas fa-search"></i> Operador <code>instanceof</code></h2>
+            <p>A veces necesitamos saber el tipo real de un objeto en tiempo de ejecución. El operador <code>instanceof</code> devuelve <code>true</code> si el objeto es de una clase determinada o de una subclase de ella.</p>
+            
+            <div class="code-block snippet">
+                <pre><code>Animal a = new Perro();
+
+if (a instanceof Perro) {
+    System.out.println("Es un Perro");
+    Perro p = (Perro) a;  // casting explícito
+    p.ladrar();
+} else if (a instanceof Gato) {
+    System.out.println("Es un Gato");
+}</code></pre>
+            </div>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Uso responsable:</strong> Aunque <code>instanceof</code> es útil, un uso excesivo puede indicar un mal diseño orientado a objetos. Siempre que sea posible, es mejor confiar en el polimorfismo en lugar de preguntar por el tipo.
+            </div>
+        </section>
+        
+        <section id="ejemplo-completo" class="content-section">
+            <h2><i class="fas fa-project-diagram"></i> Ejemplo completo: Empleados y Gerentes</h2>
+            <p>Vamos a crear una jerarquía de empleados para ilustrar la herencia y el polimorfismo en un contexto más realista.</p>
+            
+            <div class="code-block complete">
+                <pre><code>// Superclase Empleado
+public class Empleado {
+    protected String nombre;
+    protected double salarioBase;
+    
+    public Empleado(String nombre, double salarioBase) {
+        this.nombre = nombre;
+        this.salarioBase = salarioBase;
+    }
+    
+    public double calcularSalario() {
+        return salarioBase;
+    }
+    
+    @Override
+    public String toString() {
+        return nombre + " (salario: " + calcularSalario() + ")";
+    }
+}
+
+// Subclase Gerente
+public class Gerente extends Empleado {
+    private double bono;
+    
+    public Gerente(String nombre, double salarioBase, double bono) {
+        super(nombre, salarioBase);
+        this.bono = bono;
+    }
+    
+    @Override
+    public double calcularSalario() {
+        return super.calcularSalario() + bono;
+    }
+    
+    public void dirigir() {
+        System.out.println(nombre + " está dirigiendo el equipo.");
+    }
+}
+
+// Subclase Vendedor
+public class Vendedor extends Empleado {
+    private double comision;
+    
+    public Vendedor(String nombre, double salarioBase, double comision) {
+        super(nombre, salarioBase);
+        this.comision = comision;
+    }
+    
+    @Override
+    public double calcularSalario() {
+        return salarioBase + comision;  // la comisión se suma al salario base
+    }
+    
+    public void vender() {
+        System.out.println(nombre + " está vendiendo productos.");
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, tenemos una clase <code>Empleado</code> con dos subclases: <code>Gerente</code> y <code>Vendedor</code>. Cada clase sobrescribe el método <code>calcularSalario()</code> para incluir su propia lógica de cálculo. Además, cada subclase tiene un método específico (<code>dirigir()</code> para <code>Gerente</code> y <code>vender()</code> para <code>Vendedor</code>).</p>
+
+            <h3>Programa de prueba</h3>
+            <div class="code-block complete">
+                <pre><code>import java.util.ArrayList;
+
+public class Nomina {
+    public static void main(String[] args) {
+        ArrayList&lt;Empleado&gt; empleados = new ArrayList&lt;&gt;();
+        
+        empleados.add(new Empleado("Ana", 2000));
+        empleados.add(new Gerente("Carlos", 3000, 500));
+        empleados.add(new Vendedor("Luis", 1500, 300));
+        
+        // Cálculo polimórfico de salarios
+        double totalSalarios = 0;
+        for (Empleado e : empleados) {
+            System.out.println(e);  // llama a toString() polimórficamente
+            totalSalarios += e.calcularSalario();
+            
+            // Podemos preguntar por el tipo si queremos hacer algo específico
+            if (e instanceof Gerente) {
+                ((Gerente) e).dirigir();
+            } else if (e instanceof Vendedor) {
+                ((Vendedor) e).vender();
+            }
+        }
+        System.out.println("Total a pagar: " + totalSalarios);
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, tenemos una clase <code>Empleado</code> con dos subclases: <code>Gerente</code> y <code>Vendedor</code>. Cada clase sobrescribe el método <code>calcularSalario()</code> para incluir su propia lógica de cálculo. En el programa de prueba, tratamos a todos los empleados como objetos de la superclase, pero gracias al polimorfismo, se llama al método correcto para cada tipo de empleado.</p>
+        </section>
+
+    </main>
+    
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: "herencia-intro",
+            titulo: "Herencia y Polimorfismo",
+            subtitulo: "extends, super, sobrescritura y polimorfismo"
+        };
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

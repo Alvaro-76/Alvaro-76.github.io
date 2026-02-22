@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Clases Abstractas e Interfaces</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende a utilizar clases abstractas e interfaces en Java: definición, diferencias, métodos default y ejemplos prácticos.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="abstractas-interfaces-intro" class="content-section">
+            <h2><i class="fas fa-cubes"></i> Clases Abstractas e Interfaces</h2>
+            <p>En Java, las <strong>clases abstractas</strong> y las <strong>interfaces</strong> son dos mecanismos que nos permiten definir contratos o comportamientos que deben ser implementados por otras clases. Ambos son fundamentales para diseñar software con un buen nivel de abstracción y para aplicar principios como la herencia y el polimorfismo de manera más flexible.</p>
+            <div class="info-box">
+                <h3>¿Por qué son importantes?</h3>
+                <ul>
+                    <li>Permiten definir métodos sin implementación (abstractos) que las subclases están obligadas a implementar.</li>
+                    <li>Ayudan a crear jerarquías de clases más organizadas y reutilizables.</li>
+                    <li>Las interfaces, además, posibilitan el <strong>polimorfismo múltiple</strong> (una clase puede implementar varias interfaces).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="clases-abstractas" class="content-section">
+            <h2><i class="fas fa-file-contract"></i> Clases Abstractas</h2>
+            <p>Una <strong>clase abstracta</strong> es una clase que no puede ser instanciada directamente. Se declara con la palabra clave <code>abstract</code> y puede contener tanto métodos abstractos (sin cuerpo) como métodos concretos (con implementación).</p>
+            
+            <h3>Características:</h3>
+            <ul>
+                <li>Puede tener atributos, constructores y métodos normales.</li>
+                <li>Puede tener métodos abstractos (solo la firma, sin cuerpo).</li>
+                <li>Si una clase tiene al menos un método abstracto, la clase debe ser declarada abstracta.</li>
+                <li>No se puede crear un objeto con <code>new</code> de una clase abstracta.</li>
+                <li>Las subclases concretas deben implementar todos los métodos abstractos heredados (a menos que también sean abstractas).</li>
+            </ul>
+
+            <h3>Ejemplo de clase abstracta:</h3>
+            <div class="code-block complete">
+                <pre><code>// Clase abstracta Animal
+public abstract class Animal {
+    protected String nombre;
+
+    public Animal(String nombre) {
+        this.nombre = nombre;
+    }
+
+    // Método concreto (ya implementado)
+    public void dormir() {
+        System.out.println(nombre + " está durmiendo.");
+    }
+
+    // Método abstracto (obliga a las subclases a implementarlo)
+    public abstract void hacerSonido();
+}
+
+// Subclase concreta Perro
+public class Perro extends Animal {
+    public Perro(String nombre) {
+        super(nombre);
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " dice: ¡Guau!");
+    }
+}
+
+// Subclase concreta Gato
+public class Gato extends Animal {
+    public Gato(String nombre) {
+        super(nombre);
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " dice: ¡Miau!");
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, <code>Animal</code> es una clase abstracta que define un método abstracto <code>hacerSonido()</code>. Las clases <code>Perro</code> y <code>Gato</code> extienden <code>Animal</code> e implementan el método abstracto, proporcionando su propia versión del sonido que hacen.</p>
+            <div class="code-block snippet">
+                <pre><code>// Uso en main:
+Animal miMascota = new Perro("Bobby");
+miMascota.hacerSonido(); // Bobby dice: ¡Guau!
+miMascota.dormir();      // Bobby está durmiendo.
+
+// Animal a = new Animal("Algo"); // Error: no se puede instanciar una clase abstracta</code></pre>
+            </div>
+            <p>En este ejemplo, <code>Animal</code> es una clase abstracta que define un método abstracto <code>hacerSonido()</code>. Las clases <code>Perro</code> y <code>Gato</code> extienden <code>Animal</code> e implementan el método abstracto, proporcionando su propia versión del sonido que hacen.</p>
+
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Una clase abstracta puede tener constructores, aunque no se pueda instanciar directamente. Estos constructores son invocados por las subclases mediante <code>super()</code> para inicializar los atributos de la parte abstracta.
+            </div>
+        </section>
+
+        <section id="interfaces" class="content-section">
+            <h2><i class="fas fa-handshake"></i> Interfaces</h2>
+            <p>Una <strong>interfaz</strong> es una colección de métodos abstractos y constantes (atributos <code>public static final</code> implícitamente). A partir de Java 8, las interfaces pueden incluir métodos <code>default</code> y <code>static</code> con implementación.</p>
+            
+            <h3>Características:</h3>
+            <ul>
+                <li>Se declaran con la palabra clave <code>interface</code>.</li>
+                <li>Los métodos son implícitamente <code>public abstract</code> (no es necesario escribirlo).</li>
+                <li>Los atributos son implícitamente <code>public static final</code>.</li>
+                <li>Una clase puede implementar múltiples interfaces (herencia múltiple de tipo).</li>
+                <li>No pueden tener constructores ni atributos de instancia.</li>
+            </ul>
+
+            <h3>Ejemplo de interfaz:</h3>
+            <div class="code-block complete">
+                <pre><code>// Interfaz Volador
+public interface Volador {
+    // Método abstracto (implícitamente public abstract)
+    void volar();
+
+    // Método concreto (desde Java 8) usando default
+    default void planear() {
+        System.out.println("Planeando...");
+    }
+
+    // Método estático (desde Java 8)
+    static void mostrarTipo() {
+        System.out.println("Soy un objeto volador");
+    }
+}
+
+// Clase Pajaro que implementa Volador
+public class Pajaro implements Volador {
+    private String nombre;
+
+    public Pajaro(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
+    public void volar() {
+        System.out.println(nombre + " está volando.");
+    }
+}
+
+// Clase Avion que también implementa Volador
+public class Avion implements Volador {
+    private String modelo;
+
+    public Avion(String modelo) {
+        this.modelo = modelo;
+    }
+
+    @Override
+    public void volar() {
+        System.out.println("Avión " + modelo + " volando.");
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, la interfaz <code>Volador</code> define un método abstracto <code>volar()</code>, un método default <code>planear()</code> y un método estático <code>mostrarTipo()</code>. Las clases <code>Pajaro</code> y <code>Avion</code> implementan la interfaz y proporcionan su propia implementación del método <code>volar()</code>.</p>
+
+            <div class="code-block snippet">
+                <pre><code>// Uso en main:
+Volador v1 = new Pajaro("Loro");
+Volador v2 = new Avion("Boeing 747");
+
+v1.volar();        // Loro está volando.
+v1.planear();      // Planeando...
+v2.volar();        // Avión Boeing 747 volando.
+
+Volador.mostrarTipo(); // Llamada a método estático de interfaz</code></pre>
+            </div>
+            <p>En este ejemplo, tanto <code>Pajaro</code> como <code>Avion</code> implementan la interfaz <code>Volador</code>, lo que les obliga a implementar el método <code>volar()</code>. Además, ambos pueden usar el método default <code>planear()</code> sin necesidad de implementarlo, aunque podrían sobrescribirlo si quisieran. El método estático <code>mostrarTipo()</code> se llama directamente desde la interfaz.</p>
+
+            <div class="info-box">
+                <h3>Métodos default y static en interfaces</h3>
+                <p><strong>default:</strong> Permite añadir métodos con implementación por defecto sin romper las clases que ya implementaban la interfaz. Las clases pueden sobrescribirlos si lo desean.</p>
+                <p><strong>static:</strong> Métodos pertenecientes a la interfaz, se invocan como <code>NombreInterfaz.metodo()</code>. No pueden ser sobrescritos.</p>
+            </div>
+        </section>
+
+        <section id="diferencias" class="content-section">
+            <h2><i class="fas fa-balance-scale"></i> Diferencias entre Clase Abstracta e Interfaz</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Característica</th>
+                        <th>Clase Abstracta</th>
+                        <th>Interfaz</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Instanciación</td>
+                        <td>No se puede instanciar</td>
+                        <td>No se puede instanciar</td>
+                    </tr>
+                    <tr>
+                        <td>Atributos</td>
+                        <td>Puede tener cualquier tipo de atributos (instancia, estáticos, constantes)</td>
+                        <td>Solo constantes <code>public static final</code></td>
+                    </tr>
+                    <tr>
+                        <td>Constructores</td>
+                        <td>Sí, para inicializar atributos</td>
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td>Métodos</td>
+                        <td>Abstractos y concretos</td>
+                        <td>Abstractos, default, static (y privados desde Java 9)</td>
+                    </tr>
+                    <tr>
+                        <td>Herencia / Implementación</td>
+                        <td>Una clase puede heredar de <strong>una sola</strong> clase abstracta</td>
+                        <td>Una clase puede implementar <strong>múltiples</strong> interfaces</td>
+                    </tr>
+                    <tr>
+                        <td>Modificadores de acceso</td>
+                        <td>Puede tener métodos con cualquier visibilidad (public, protected, private)</td>
+                        <td>Los métodos abstractos son implícitamente public; los default también public</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="ejemplo-combinado" class="content-section">
+            <h2><i class="fas fa-project-diagram"></i> Ejemplo combinado: Herencia de clase abstracta e implementación de interfaz</h2>
+            <p>Java permite que una clase extienda una única clase (abstracta o concreta) y además implemente múltiples interfaces. Esto es muy útil para combinar comportamientos.</p>
+
+            <div class="code-block complete">
+                <pre><code>// Clase abstracta Animal (ya definida antes)
+// Interfaz Mascota
+public interface Mascota {
+    void jugar();
+    void mostrarCariño();
+}
+
+// Clase Perro que extiende Animal e implementa Mascota
+public class Perro extends Animal implements Mascota {
+    public Perro(String nombre) {
+        super(nombre);
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " dice: ¡Guau!");
+    }
+
+    @Override
+    public void jugar() {
+        System.out.println(nombre + " está jugando con la pelota.");
+    }
+
+    @Override
+    public void mostrarCariño() {
+        System.out.println(nombre + " mueve la cola.");
+    }
+}
+
+// Clase Gato que extiende Animal e implementa Mascota
+public class Gato extends Animal implements Mascota {
+    public Gato(String nombre) {
+        super(nombre);
+    }
+
+    @Override
+    public void hacerSonido() {
+        System.out.println(nombre + " dice: ¡Miau!");
+    }
+
+    @Override
+    public void jugar() {
+        System.out.println(nombre + " juega con un ovillo.");
+    }
+
+    @Override
+    public void mostrarCariño() {
+        System.out.println(nombre + " ronronea.");
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, tanto <code>Perro</code> como <code>Gato</code> extienden la clase abstracta <code>Animal</code> y también implementan la interfaz <code>Mascota</code>. Esto les obliga a implementar los métodos abstractos de ambas estructuras, combinando así el comportamiento de un animal con las características de una mascota.</p>
+
+            <h3>Programa de prueba</h3>
+            <div class="code-block complete">
+                <pre><code>public class TestCombinado {
+    public static void main(String[] args) {
+        Perro perro = new Perro("Bobby");
+        Gato gato = new Gato("Luna");
+
+        // Métodos de Animal
+        perro.hacerSonido();
+        perro.dormir();
+
+        // Métodos de Mascota
+        perro.jugar();
+        perro.mostrarCariño();
+
+        System.out.println("-------------------");
+
+        gato.hacerSonido();
+        gato.dormir();
+        gato.jugar();
+        gato.mostrarCariño();
+
+        // Polimorfismo: podemos tratar a ambos como Animal o como Mascota
+        Animal[] animales = { perro, gato };
+        for (Animal a : animales) {
+            a.hacerSonido();
+        }
+
+        Mascota[] mascotas = { perro, gato };
+        for (Mascota m : mascotas) {
+            m.jugar();
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este programa de prueba, creamos instancias de <code>Perro</code> y <code>Gato</code>, y llamamos a los métodos definidos tanto en la clase abstracta como en la interfaz. Además, demostramos el polimorfismo al tratar a ambos objetos como instancias de <code>Animal</code> y <code>Mascota</code>.</p>
+        </section>
+
+        <section id="consideraciones" class="content-section">
+            <h2><i class="fas fa-tasks"></i> Consideraciones importantes</h2>
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Herencia múltiple de estado:</strong> Java no permite la herencia múltiple de clases (una clase solo puede extender una). Sin embargo, las interfaces proporcionan herencia múltiple de tipo (una clase puede implementar varias interfaces), lo que permite combinar comportamientos sin los problemas de la herencia múltiple de implementación.
+            </div>
+            <div class="info-box">
+                <h3>¿Cuándo usar cada una?</h3>
+                <ul>
+                    <li><strong>Clase abstracta:</strong> Cuando varias clases comparten código (atributos o métodos concretos) y queremos proporcionar una base común. También cuando necesitamos controlar la visibilidad de los métodos (protected, etc.).</li>
+                    <li><strong>Interfaz:</strong> Cuando queremos definir un contrato de comportamiento que puede ser implementado por clases no relacionadas entre sí. Ideal para establecer capacidades (por ejemplo: <code>Comparable</code>, <code>Runnable</code>).</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+    
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: "abstractas-interfaces-intro",
+            titulo: "Clases Abstractas e Interfaces",
+            subtitulo: "Contratos, abstracción y herencia múltiple de tipo"
+        };
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
