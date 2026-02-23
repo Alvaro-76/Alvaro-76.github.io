@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Manejo de Archivos y Serialización</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende a leer y escribir archivos en Java: archivos de texto, binarios, serialización de objetos, try-with-resources y buenas prácticas.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="archivos-intro" class="content-section">
+            <h2><i class="fas fa-file-alt"></i> Introducción al manejo de archivos</h2>
+            <p>Hasta ahora hemos trabajado con datos que viven solo mientras el programa se ejecuta (en memoria). Pero en muchas aplicaciones necesitamos guardar información de forma permanente: configuraciones, registros, datos de usuario, etc. Para ello utilizamos <strong>archivos</strong>.</p>
+            <p>Java proporciona el paquete <code>java.io</code> y, desde Java 7, <code>java.nio.file</code> con funcionalidades más modernas. En este tema nos centraremos en las clases clásicas de <code>java.io</code>, que siguen siendo muy utilizadas y son la base para entender cualquier operación de entrada/salida.</p>
+            
+            <div class="info-box">
+                <h3>Concepto de flujo (stream)</h3>
+                <p>Un <strong>flujo</strong> es una secuencia de datos que viaja desde un origen (teclado, archivo, red) hacia un destino (pantalla, archivo, red). En Java, los flujos se representan mediante clases que permiten leer o escribir datos de manera secuencial.</p>
+                <ul>
+                    <li><strong>Flujos de bytes:</strong> <code>InputStream</code> y <code>OutputStream</code> (para datos binarios).</li>
+                    <li><strong>Flujos de caracteres:</strong> <code>Reader</code> y <code>Writer</code> (para texto, manejan codificación).</li>
+                </ul>
+            </div>
+            
+            <p>Todas las operaciones de archivo pueden lanzar excepciones verificadas (<code>IOException</code> y sus subclases), por lo que deberemos manejarlas con <code>try-catch</code> o declararlas con <code>throws</code>.</p>
+        </section>
+
+        <section id="archivos-texto" class="content-section">
+            <h2><i class="fas fa-file-lines"></i> Archivos de texto</h2>
+            <p>Los archivos de texto contienen caracteres legibles. Para trabajar con ellos usamos clases derivadas de <code>Reader</code> y <code>Writer</code>.</p>
+            
+            <h3>Escritura básica: FileWriter y BufferedWriter</h3>
+            <p><code>FileWriter</code> escribe caracteres en un archivo. <code>BufferedWriter</code> añade un buffer para mejorar el rendimiento y proporciona el método <code>newLine()</code> para escribir saltos de línea independientes del sistema operativo.</p>
+            
+            <div class="code-block complete">
+                <pre><code>import java.io.*;
+
+public class EscrituraTexto {
+    public static void main(String[] args) {
+        // Usamos try-with-resources para asegurar el cierre automático
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("salida.txt"))) {
+            writer.write("Primera línea");
+            writer.newLine();
+            writer.write("Segunda línea");
+            writer.newLine();
+            writer.write("Tercera línea");
+            System.out.println("Archivo escrito correctamente.");
+        } catch (IOException e) {
+            System.out.println("Error al escribir el archivo: " + e.getMessage());
+        }
+    }
+}</code></pre>
+            </div>
+            <p>Si el archivo no existe, <code>FileWriter</code> lo crea. Si existe, por defecto lo sobrescribe. Para añadir contenido al final, usamos el constructor <code>FileWriter("salida.txt", true)</code>.</p>
+
+            <h3>Lectura básica: FileReader y BufferedReader</h3>
+            <p><code>FileReader</code> lee caracteres de un archivo. <code>BufferedReader</code> añade buffer y permite leer línea a línea con <code>readLine()</code>.</p>
+            
+            <div class="code-block complete">
+                <pre><code>import java.io.*;
+
+public class LecturaTexto {
+    public static void main(String[] args) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("salida.txt"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                System.out.println("Leído: " + linea);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no encontrado: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error de lectura: " + e.getMessage());
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el programa lee cada línea del archivo y la imprime en la consola. El bucle continúa hasta que <code>readLine()</code> devuelve <code>null</code>, lo que indica que se ha llegado al final del archivo.</p>
+            <p>El método <code>readLine()</code> devuelve <code>null</code> cuando se llega al final del archivo.</p>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Codificación de caracteres:</strong> <code>FileReader</code> y <code>FileWriter</code> usan la codificación por defecto del sistema. Si necesitas especificar una (por ejemplo UTF-8), debes usar <code>InputStreamReader</code> y <code>OutputStreamWriter</code> combinados con <code>FileInputStream</code> / <code>FileOutputStream</code>.
+            </div>
+        </section>
+
+        <section id="archivos-binarios" class="content-section">
+            <h2><i class="fas fa-file-code"></i> Archivos binarios</h2>
+            <p>Los archivos binarios almacenan datos en el mismo formato en que se representan en memoria (bytes). Son útiles para guardar tipos primitivos, imágenes, objetos serializados, etc.</p>
+            
+            <h3>Flujos de bytes: FileInputStream y FileOutputStream</h3>
+            <p>Permiten leer y escribir bytes directamente.</p>
+            
+            <div class="code-block snippet">
+                <pre><code>// Escritura de bytes
+try (FileOutputStream fos = new FileOutputStream("datos.bin")) {
+    fos.write(65);  // escribe el byte 65 (letra 'A')
+    byte[] datos = {66, 67, 68};
+    fos.write(datos);
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+// Lectura de bytes
+try (FileInputStream fis = new FileInputStream("datos.bin")) {
+    int byteLeido;
+    while ((byteLeido = fis.read()) != -1) {
+        System.out.print(byteLeido + " ");
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}</code></pre>
+            </div>
+            <p>En este ejemplo, se escriben los bytes 65, 66, 67 y 68 en el archivo. Luego se leen uno a uno hasta llegar al final del archivo (indicado por <code>-1</code>).</p>        
+            
+            <h3>Flujos filtrados para tipos primitivos: DataInputStream / DataOutputStream</h3>
+            <p>Estas clases permiten leer y escribir tipos primitivos de forma portable (int, double, boolean, etc.) sin preocuparse por la representación en bytes.</p>
+            
+            <div class="code-block complete">
+                <pre><code>import java.io.*;
+
+public class DatosPrimitivos {
+    public static void main(String[] args) {
+        // Escritura
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream("primitivos.dat"))) {
+            dos.writeInt(42);
+            dos.writeDouble(3.14159);
+            dos.writeBoolean(true);
+            dos.writeUTF("Hola mundo"); // escribe un String en formato UTF modificado
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Lectura (debe respetar el orden de escritura)
+        try (DataInputStream dis = new DataInputStream(new FileInputStream("primitivos.dat"))) {
+            int entero = dis.readInt();
+            double decimal = dis.readDouble();
+            bool flag = dis.readBoolean();
+            String texto = dis.readUTF();
+            System.out.printf("%d, %.2f, %b, %s%n", entero, decimal, flag, texto);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+            </div>
+            <p>La salida mostrará: <code>42, 3.14, true, Hola mundo</code></p>
+
+            <p><strong>Importante:</strong> Los datos se leen en el <strong>mismo orden</strong> en que se escribieron; de lo contrario se obtendrán resultados incorrectos o excepciones.</p>
+        </section>
+
+        <section id="serializacion" class="content-section">
+            <h2><i class="fas fa-cube"></i> Serialización de objetos</h2>
+            <p>La <strong>serialización</strong> es el proceso de convertir un objeto en una secuencia de bytes para poder almacenarlo en un archivo o enviarlo por la red. La <strong>deserialización</strong> es el proceso inverso: reconstruir el objeto a partir de los bytes.</p>
+            
+            <h3>Requisitos para serializar</h3>
+            <ul>
+                <li>La clase debe implementar la interfaz <code>java.io.Serializable</code> (interfaz de marcado, no tiene métodos).</li>
+                <li>Todos sus campos no estáticos ni transitorios deben ser serializables. Si algún campo no lo es, se puede marcar como <code>transient</code> para que se omita durante la serialización.</li>
+                <li>Se recomienda declarar un <code>static final long serialVersionUID</code> para controlar la compatibilidad de versiones.</li>
+            </ul>
+            
+            <h3>Ejemplo: clase Persona serializable</h3>
+            <div class="code-block complete">
+                <pre><code>import java.io.Serializable;
+
+public class Persona implements Serializable {
+    private static final long serialVersionUID = 1L; // control de versión
+    
+    private String nombre;
+    private int edad;
+    private transient String password; // no se serializa
+    
+    public Persona(String nombre, int edad, String password) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.password = password;
+    }
+    
+    @Override
+    public String toString() {
+        return "Persona{nombre='" + nombre + "', edad=" + edad + ", password='" + password + "'}";
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, la clase <code>Persona</code> es serializable. El campo <code>password</code> se marca como <code>transient</code>, por lo que no se guardará en el archivo y su valor será <code>null</code> al deserializar.</p>
+            
+            <h3>Guardar y leer objetos con ObjectOutputStream / ObjectInputStream</h3>
+            <div class="code-block complete">
+                <pre><code>import java.io.*;
+
+public class SerializacionEjemplo {
+    public static void main(String[] args) {
+        Persona p = new Persona("Ana", 25, "secreta");
+        
+        // Serializar (guardar)
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("persona.dat"))) {
+            oos.writeObject(p);
+            System.out.println("Objeto guardado.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        // Deserializar (leer)
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("persona.dat"))) {
+            Persona personaLeida = (Persona) ois.readObject();
+            System.out.println("Objeto recuperado: " + personaLeida);
+            // El password será null porque era transient
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no encontrado.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, se crea un objeto <code>Persona</code>, se guarda en un archivo y luego se lee de nuevo. Al imprimir el objeto recuperado, veremos que el campo <code>password</code> es <code>null</code> porque fue marcado como <code>transient</code>.</p>
+            <p>La salida mostrará algo como: <code>Objeto recuperado: Persona{nombre='Ana', edad=25, password='null'}</code></p>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>SerialVersionUID:</strong> Si no se declara, el JVM genera uno automáticamente basado en la clase. Si modificas la clase (añades un campo, por ejemplo), el UID cambiará y al deserializar obtendrás una <code>InvalidClassException</code>. Por eso es buena práctica declararlo explícitamente y actualizarlo solo cuando haya cambios incompatibles.
+            </div>
+        </section>
+
+        <section id="try-with-resources-archivos" class="content-section">
+            <h2><i class="fas fa-wind"></i> Try-with-resources aplicado a archivos</h2>
+            <p>Ya hemos usado <code>try-with-resources</code> en los ejemplos anteriores. Es la forma recomendada de trabajar con archivos porque garantiza que los recursos se cierren automáticamente, incluso si ocurre una excepción.</p>
+            <p>Los recursos deben implementar la interfaz <code>AutoCloseable</code> (que extiende <code>Closeable</code>). Todas las clases de E/S de Java la implementan.</p>
+            
+            <div class="code-block snippet">
+                <pre><code>// Forma clásica (antes de Java 7) con finally
+FileReader fr = null;
+BufferedReader br = null;
+try {
+    fr = new FileReader("archivo.txt");
+    br = new BufferedReader(fr);
+    // operaciones
+} catch (IOException e) {
+    e.printStackTrace();
+} finally {
+    try {
+        if (br != null) br.close();
+        if (fr != null) fr.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+// Con try-with-resources (mucho más limpio)
+try (FileReader fr = new FileReader("archivo.txt");
+     BufferedReader br = new BufferedReader(fr)) {
+    // operaciones
+} catch (IOException e) {
+    e.printStackTrace();
+}</code></pre>
+            </div>
+            <p>En el primer ejemplo, el código es más propenso a errores (olvidar cerrar, manejar excepciones en el cierre). En el segundo ejemplo, el código es más limpio y seguro. Además, puedes declarar múltiples recursos separados por punto y coma. Se cierran en orden inverso al de declaración.</p>
+            <p>Puedes declarar múltiples recursos separados por punto y coma. Se cierran en orden inverso al de declaración.</p>
+        </section>
+
+        <section id="buenas-practicas-archivos" class="content-section">
+            <h2><i class="fas fa-thumbs-up"></i> Buenas prácticas y consideraciones</h2>
+            
+            <ul class="step-list">
+                <li><strong>Siempre cierra los recursos</strong> usa try-with-resources.</li>
+                <li><strong>Maneja las excepciones</strong> específicas: <code>FileNotFoundException</code>, <code>EOFException</code>, <code>IOException</code>.</li>
+                <li><strong>No uses <code>printStackTrace()</code> en producción,</strong> mejor maneja el error de forma adecuada (mostrar mensaje al usuario, registrar en log, etc.).</li>
+                <li><strong>Para archivos de texto con codificación específica,</strong>usa <code>InputStreamReader</code> y <code>OutputStreamWriter</code>:
+            
+            
+            <div class="code-block snippet">
+                <pre><code>try (BufferedReader br = new BufferedReader(
+        new InputStreamReader(new FileInputStream("archivo.txt"), "UTF-8"))) {
+    // leer
+} catch (IOException e) {
+    // manejar
+}</code></pre>
+            </div>
+            
+                </li>
+                <li><strong>En serialización, ten cuidado con la versión</strong> (serialVersionUID). Si haces cambios incompatibles (eliminar campos, cambiar tipo), necesitarás manejar la migración de datos.</li>
+                <li><strong>Para archivos grandes, considera usar buffers</strong> (<code>BufferedInputStream</code>, <code>BufferedOutputStream</code>) para mejorar el rendimiento.</li>
+                <li><strong>No serialices objetos que contengan información sensible</strong> sin encriptar, o márcalos como <code>transient</code>.</li>
+                <li><strong>Explora también java.nio.file</strong> (clases <code>Path</code>, <code>Files</code>) para operaciones más modernas y versátiles (copiar, mover, leer atributos, etc.).
+            
+            <div class="info-box">
+                <h3>Ejemplo rápido con java.nio.file (Files)</h3>
+                <div class="code-block snippet">
+                    <pre><code>import java.nio.file.*;
+import java.util.List;
+
+// Leer todas las líneas de un archivo (archivos pequeños)
+List<String> lineas = Files.readAllLines(Paths.get("archivo.txt"));
+// Escribir líneas
+Files.write(Paths.get("salida.txt"), lineas);</code></pre>
+                </div>
+                <p>Estas operaciones son más concisas y manejan automáticamente la codificación UTF-8 por defecto.</p>
+            </div>
+            </li>
+            </ul>
+        </section>
+
+    </main>
+    
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: "archivos-intro",
+            titulo: "Manejo de Archivos y Serialización",
+            subtitulo: "Persistencia de datos: archivos de texto, binarios y objetos"
+        };
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
