@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Ejercicios</title>
+    
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags -->
+    <meta name="description" content="Ejercicios prácticos de Java para reforzar los conceptos aprendidos.">
+    
+    <!-- Estilos adicionales específicos para ejercicios (sin modificar style.css) -->
+    <style>
+        /* Ajustes para las tarjetas de ejercicio y botones de solución */
+        .ejercicios-section {
+            margin-top: 2rem;
+        }
+        .ejercicio-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .ejercicio-card:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .ejercicio-header {
+    background: var(--secondary-color);  /* Azul oscuro del tema */
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* Línea sutil */
+}
+
+.ejercicio-header i {
+    font-size: 1.8rem;
+    color: var(--primary-color);  /* El icono en naranja para que resalte */
+}
+
+.ejercicio-header h3 {
+    margin: 0;
+    flex: 1;
+    font-size: 1.3rem;
+    color: white;  /* Texto del título en blanco */
+}
+
+.ejercicio-dificultad {
+    background: var(--primary-color);  /* Naranja */
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+        .ejercicio-dificultad {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .ejercicio-body {
+            padding: 1.5rem;
+        }
+        .enunciado {
+            background: #f8f9fa;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        .pistas {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .pistas i {
+            font-size: 1.5rem;
+            color: #856404;
+        }
+        .pistas-content h4 {
+            margin: 0 0 0.3rem 0;
+            color: #856404;
+        }
+        .pistas-content ul {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+        
+        /* Botón de solución propio (no interfiere con el de script.js) */
+        .btn-solucion {
+            background: linear-gradient(135deg, var(--primary-color), #e07c1b);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 0.7rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            margin: 1rem 0 0.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .btn-solucion:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, var(--secondary-color), #3a6a8f);
+        }
+        .btn-solucion:active {
+            transform: translateY(0);
+        }
+        
+        /* Contenedor de respuesta oculto por defecto */
+        .respuesta-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, opacity 0.3s;
+            opacity: 0;
+            margin-top: 0;
+        }
+        .respuesta-container.visible {
+            max-height: 2000px; /* suficientemente grande para contener el contenido */
+            opacity: 1;
+            margin-top: 1.5rem;
+        }
+        .respuesta-content {
+            background: #f0f7ff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #cce5ff;
+        }
+        .respuesta-content h4 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .explicacion {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #17a2b8;
+        }
+        .nota-ejercicio {
+            background: #d4edda;
+            color: #155724;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .respuesta-botones {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+        .btn-solucion-secundario {
+            background: linear-gradient(135deg, #6c757d, #495057);
+        }
+        .btn-solucion-secundario:hover {
+            background: linear-gradient(135deg, #5a6268, #343a40);
+        }
+        
+        /* Asegurar que los botones de copiar se vean bien dentro de respuestas */
+        .respuesta-container .code-block {
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedores para los componentes (se cargan con JS) -->
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- Puedes cambiar el ID y título según la página -->
+        <section id="ejercicios-inicio" class="content-section">
+            <h2><i class="fas fa-dumbbell"></i> Ejercicios de Java</h2>
+            <p>Aquí encontrarás ejercicios prácticos para afianzar los conceptos. Haz clic en "Mostrar solución" para ver una posible implementación.</p>
+            <!-- Aclaracion para los alumnos de que no existe una unica forma de resolver cada ejercicio y es por ello que esto son unas posibles soluciones -->
+             <p class="nota-ejercicio"><i class="fas fa-info-circle"></i> Nota: Estas son soluciones de ejemplo. En programación, existen múltiples formas de resolver un problema. ¡Siéntete libre de experimentar y encontrar tu propia solución!</p>
+        </section>
+
+        <section id="ej1" class="ejercicios-section">
+            <div class="ejercicio-card">
+                <div class="ejercicio-header">
+                    <i class="fas fa-code"></i>
+                    <h3>Ejercicio 1: Manejo de Cadenas</h3>
+                    <span class="ejercicio-dificultad">Fácil</span>
+                </div>
+                <div class="ejercicio-body">
+                    <div class="enunciado">
+                        <p>Escribe un programa que pida al usuario una frase y luego muestre la longitud de esa frase, la frase en mayúsculas y la frase en minúsculas.</p>
+                    </div>
+                    <div class="pistas">
+                        <i class="fas fa-lightbulb"></i>
+                        <div class="pistas-content">
+                            <h4>Pistas:</h4>
+                            <ul>
+                                <li>Importa <code>java.util.Scanner</code>.</li>
+                                <li>Crea un objeto <code>Scanner</code> asociado a <code>System.in</code>.</li>
+                                <li>Usa <code>nextLine()</code> para leer la frase.</li>
+                                <li>Usa <code>length()</code> para obtener la longitud de la frase.</li>
+                                <li>Usa <code>toUpperCase()</code> y <code>toLowerCase()</code> para convertir la frase.</li>
+                        </div>
+                    </div>
+
+                    <!-- Botón de solución (clase propia) -->
+                    <button class="btn-solucion" data-target="respuesta1">
+                        <i class="fas fa-eye"></i> Mostrar solución
+                    </button>
+
+                    <!-- Respuesta oculta -->
+                    <div id="respuesta1" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución</h4>
+                            <div class="explicacion">
+                                <p>Se crea un Scanner, se pide la frase, se lee y se imprime la longitud, mayúsculas y minúsculas.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <pre><code>import java.util.Scanner;
+
+public class ManejoCadenas {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Introduce una frase: ");
+        String frase = sc.nextLine();
+        
+        System.out.println("Longitud de la frase: " + frase.length());
+        System.out.println("Frase en mayúsculas: " + frase.toUpperCase());
+        System.out.println("Frase en minúsculas: " + frase.toLowerCase());
+        
+        sc.close();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ej2" class="ejercicios-section">
+            <div class="ejercicio-card">
+                <div class="ejercicio-header">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Ejercicio 2: Mayor de edad</h3>
+                    <span class="ejercicio-dificultad">Fácil</span>
+                </div>
+                <div class="ejercicio-body">
+                    <div class="enunciado">
+                        <p>Crea un programa que pida al usuario su edad y determine si es mayor de edad (18 años o más). Muestra un mensaje adecuado según el resultado.</p>
+                        <p>Si es mayor de edad, muestra "Eres mayor de edad". Si no lo es, muestra "Eres menor de edad".</p>
+                    </div>
+
+                    <div class="respuesta-botones">
+                        <button class="btn-solucion" data-target="respuesta2-basica">
+                            <i class="fas fa-eye"></i>Mostrar solución
+                        </button>
+                    </div>
+
+                    <!-- Solución básica -->
+                    <div id="respuesta2-basica" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución</h4>
+                            <div class="explicacion">
+                                <p>Se define un método <code>esMayorEdad</code> que recibe la edad como parámetro y devuelve un booleano. En el main se usa Scanner para leer la edad y se invoca el método.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <pre><code>import java.util.Scanner;
+
+public class MayorEdad {
+    public static boolean esMayorEdad(int edad) {
+        return edad >= 18;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa tu edad: ");
+        int edad = sc.nextInt();
+        
+        if (esMayorEdad(edad)) {
+            System.out.println("Eres mayor de edad.");
+        } else {
+            System.out.println("Eres menor de edad.");
+        }
+        
+        sc.close();
+    }
+}
+ </code></pre>
+                            </div>
+                            <p>El nombre de la clase es <code>MayorEdad</code>. Si tienes otro nombre para la clase, asegúrate de que coincida con el nombre del archivo .java.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ej3" class="ejercicios-section">
+            <div class="ejercicio-card">
+                <div class="ejercicio-header">
+                    <i class="fas fa-traffic-light"></i>
+                    <h3>Ejercicio 3: Semáforo</h3>
+                    <span class="ejercicio-dificultad">Media</span>
+                </div>
+                <div class="ejercicio-body">
+                    <div class="enunciado">
+                        <p>Escribe un programa que simule un semáforo. El programa debe pedir al usuario el color del semáforo (rojo, amarillo o verde) y mostrar un mensaje correspondiente.</p>
+                    </div>
+
+                    <button class="btn-solucion" data-target="respuesta3">
+                        <i class="fas fa-eye"></i> Mostrar solución 1
+                    </button>
+                    <button class="btn-solucion" data-target="respuesta3b">
+                        <i class="fas fa-eye"></i> Mostrar solución 2
+                    </button>
+
+                    <div id="respuesta3" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución 1</h4>
+                            <div class="explicacion">
+                                <p>Se usa un if anidado para verificar el color ingresado por el usuario y mostrar el mensaje correspondiente.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <pre><code>import java.util.Scanner;
+
+public class Semafaro {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa el color del semáforo (rojo, amarillo o verde): ");
+        String color = sc.nextLine();
+        
+        if (color.equals("rojo")) {
+            System.out.println("Detente.");
+        } else if (color.equals("amarillo")) {
+            System.out.println("Prepárate para detenerte.");
+        } else if (color.equals("verde")) {
+            System.out.println("Pasa.");
+        } else {
+            System.out.println("Color no válido.");
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="respuesta3b" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución 2 (switch)</h4>
+                            <div class="explicacion">
+                                <p>Se puede usar un switch para simplificar la lógica de selección del color.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <pre><code>import java.util.Scanner;
+
+public class SemafaroSwitch {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa el color del semáforo (rojo, amarillo o verde): ");
+        String color = sc.nextLine();
+        
+        switch (color) {
+            case "rojo":
+                System.out.println("Detente.");
+                break;
+            case "amarillo":
+                System.out.println("Prepárate para detenerte.");
+                break;
+            case "verde":
+                System.out.println("Pasa.");
+                break;
+            default:
+                System.out.println("Color no válido.");
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+                            </div>
+                            <div class="explicacion">
+                                <p>El switch es una estructura de control que permite evaluar una variable contra múltiples casos de manera más limpia que varios if-else anidados. En este caso, se evalúa el color ingresado por el usuario y se ejecuta el bloque de código correspondiente a cada color.</p>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ej4" class="ejercicios-section">
+            <div class="ejercicio-card">
+                <div class="ejercicio-header">
+                    <i class="fas fa-filter"></i>
+                    <h3>Ejercicio 4: Contar números pares</h3>
+                    <span class="ejercicio-dificultad">Media</span>
+                </div>
+                <div class="ejercicio-body">
+                    <div class="enunciado">
+                        <p>Escribe un programa que pida al usuario un número entero positivo y luego cuente cuántos números pares hay desde 1 hasta ese número (inclusive) y los muestre.</p>
+                    </div>
+
+                    <button class="btn-solucion" data-target="respuesta4">
+                        <i class="fas fa-eye"></i> Mostrar solución 1
+                    </button>
+                    <button class="btn-solucion" data-target="respuesta4b">
+                        <i class="fas fa-eye"></i> Mostrar solución 2
+                    </button>
+                    
+                    <div id="respuesta4" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución</h4>
+                            <div class="explicacion">
+                                <p>Se usa un bucle for para iterar desde 1 hasta el número ingresado por el usuario, y se cuenta cuántos de esos números son pares usando el operador módulo y los muestra.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <pre><code>import java.util.Scanner; 
+public class ContarPares {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa un número entero positivo: ");
+        int numero = sc.nextInt();
+        int contadorPares = 0;   
+
+        for (int i = 1; i <= numero; i++) {
+            if (i % 2 == 0) {
+                System.out.println(i + " es un número par.");
+                contadorPares++;
+            }
+        }
+
+        System.out.println("Hay " + contadorPares + " números pares desde 1 hasta " + numero);
+        sc.close();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="respuesta4b" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución 2 (while)</h4>
+                            <div class="explicacion">
+                                <p>También se puede resolver usando un bucle while en lugar de for.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <!-- El codigo hazlo con un while pero en vez de contar de uno en uno que se incremente de dos en dos evitando de este modo tener que comprobar que es par-->
+                                <pre><code>import java.util.Scanner;
+public class ContarParesWhile {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa un número entero positivo: ");
+        int numero = sc.nextInt();
+        int contadorPares = 0;
+        int i = 2; // Empezamos desde el primer número par
+
+        while (i <= numero) {  
+            System.out.println(i + " es un número par.");          
+            contadorPares++;            
+            i += 2; // Incrementar de dos en dos para evitar comprobar si es par
+        }
+
+        System.out.println("Hay " + contadorPares + " números pares desde 1 hasta " + numero);
+        sc.close();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EJERCICIO 5 CORREGIDO -->
+        <section id="ej5" class="ejercicios-section">
+            <div class="ejercicio-card">
+                <div class="ejercicio-header">
+                    <i class="fas fa-lock"></i>
+                    <h3>Ejercicio 5: Validación contraseña</h3>
+                    <span class="ejercicio-dificultad">Media</span>
+                </div>
+                <div class="ejercicio-body">
+                    <div class="enunciado">
+                        <p>Escribe un programa que pida al usuario una contraseña y luego valide si cumple con los siguientes requisitos:</p>
+                        <ul>
+                            <li>Debe tener al menos 8 caracteres.</li>
+                            <li>Debe contener al menos una letra mayúscula.</li>
+                            <li>Debe contener al menos una letra minúscula.</li>
+                            <li>Debe contener al menos un número.</li>
+                        </ul>
+                        <p>El programa debe mostrar un mensaje indicando si la contraseña es válida o no, y en caso de no ser válida, debe indicar qué requisitos no se cumplen.</p>
+                    </div>
+
+                    <button class="btn-solucion" data-target="respuesta5">
+                        <i class="fas fa-eye"></i> Mostrar solución 1
+                    </button>
+                    <button class="btn-solucion" data-target="respuesta5b">
+                        <i class="fas fa-eye"></i> Mostrar solución 2
+                    </button>
+                    <button class="btn-solucion" data-target="respuesta5c">
+                        <i class="fas fa-eye"></i> Mostrar solución 3
+                    </button>
+
+                    <!-- Solución 1 -->
+                    <div id="respuesta5" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución 1 (enfoque directo)</h4>
+                            <div class="explicacion">
+                                <p>En esta solución se utiliza un enfoque directo en el <code>main</code>. Se declaran variables booleanas para cada requisito, se comprueba la longitud y luego se recorre la cadena carácter por carácter actualizando las banderas. Finalmente se muestran los resultados.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <pre><code>import java.util.Scanner;
+
+public class ValidadorPassword {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Introduce una contraseña: ");
+        String password = sc.nextLine();
+        
+        boolean tiene8caracteres = false;
+        boolean tieneMayuscula = false;
+        boolean tieneMinuscula = false;
+        boolean tieneNumero = false;
+        
+        if (password.length() >= 8) {
+            tiene8caracteres = true;
+        }
+        
+        for (int i = 0; i < password.length(); i++) {
+            char c = password.charAt(i);
+            
+            if (c >= 'A' && c <= 'Z') {
+                tieneMayuscula = true;
+            }
+            if (c >= 'a' && c <= 'z') {
+                tieneMinuscula = true;
+            }
+            if (c >= '0' && c <= '9') {
+                tieneNumero = true;
+            }
+        }
+        
+        System.out.println();
+        
+        if (tiene8caracteres && tieneMayuscula && tieneMinuscula && tieneNumero) {
+            System.out.println("La contraseña es VÁLIDA.");
+        } else {
+            System.out.println("La contraseña NO es válida. Faltan los siguientes requisitos:");
+            if (!tiene8caracteres) {
+                System.out.println("   - Debe tener al menos 8 caracteres.");
+            }
+            if (!tieneMayuscula) {
+                System.out.println("   - Debe contener al menos una letra mayúscula.");
+            }
+            if (!tieneMinuscula) {
+                System.out.println("   - Debe contener al menos una letra minúscula.");
+            }
+            if (!tieneNumero) {
+                System.out.println("   - Debe contener al menos un número.");
+            }
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Solución 2 -->
+                    <div id="respuesta5b" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución 2 (código compacto)</h4>
+                            <div class="explicacion">
+                                <p>En esta solución se utiliza un enfoque similar, pero con una estructura más compacta: se actualizan las variables booleanas usando el operador <code>||</code> dentro del bucle y se declara la comprobación de longitud directamente.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <pre><code>import java.util.Scanner;
+
+public class ValidadorPassword {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Introduce una contraseña: ");
+        String password = sc.nextLine();
+        
+        boolean tieneMayuscula = false;
+        boolean tieneMinuscula = false;
+        boolean tieneNumero = false;
+        boolean tiene8caracteres = password.length() >= 8;
+        
+        for (int i = 0; i < password.length(); i++) {
+            char c = password.charAt(i);
+            tieneMayuscula = tieneMayuscula || (c >= 'A' && c <= 'Z');
+            tieneMinuscula = tieneMinuscula || (c >= 'a' && c <= 'z');
+            tieneNumero = tieneNumero || (c >= '0' && c <= '9');
+        }
+        
+        System.out.println();
+        
+        if (tiene8caracteres && tieneMayuscula && tieneMinuscula && tieneNumero) {
+            System.out.println("La contraseña es VÁLIDA.");
+        } else {
+            System.out.println("La contraseña NO es válida. Faltan los siguientes requisitos:");
+            if (!tiene8caracteres) {
+                System.out.println("   - Debe tener al menos 8 caracteres.");
+            }
+            if (!tieneMayuscula) {
+                System.out.println("   - Debe contener al menos una letra mayúscula.");
+            }
+            if (!tieneMinuscula) {
+                System.out.println("   - Debe contener al menos una letra minúscula.");
+            }
+            if (!tieneNumero) {
+                System.out.println("   - Debe contener al menos un número.");
+            }
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+                            </div>                       
+                        </div>
+                    </div>
+
+                    <!-- Solución 3 -->
+                    <div id="respuesta5c" class="respuesta-container">
+                        <div class="respuesta-content">
+                            <h4><i class="fas fa-check-circle"></i> Solución 3 (con métodos separados)</h4>
+                            <div class="explicacion">
+                                <p>En esta solución se crean métodos auxiliares para mejorar la modularidad: <code>tieneRango</code> verifica si la cadena contiene algún carácter en un rango dado, y <code>todosCumplidos</code> comprueba que un array de booleanos sea todo true. El <code>main</code> queda más limpio y reutilizable.</p>
+                            </div>
+                            <div class="code-block complete">
+                                <pre><code>import java.util.Scanner;
+
+public class ValidadorPassword {
+    
+    public static boolean tieneRango(String cadena, char min, char max) {
+        for (char c : cadena.toCharArray()) {
+            if (c >= min && c <= max) return true;
+        }
+        return false;
+    }
+    
+    public static boolean todosCumplidos(boolean[] requisitos) {
+        for (boolean cumple : requisitos) {
+            if (!cumple) return false;
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Introduce una contraseña: ");
+        String password = sc.nextLine();
+        
+        String[] mensajes = {
+            "al menos 8 caracteres",
+            "una letra mayúscula", 
+            "una letra minúscula",
+            "un número"
+        };
+        
+        boolean[] requisitos = {
+            password.length() >= 8,
+            tieneRango(password, 'A', 'Z'),
+            tieneRango(password, 'a', 'z'),
+            tieneRango(password, '0', '9')
+        };
+        
+        if (todosCumplidos(requisitos)) {
+            System.out.println("\nLa contraseña es VÁLIDA.");
+        } else {
+            System.out.println("\nLa contraseña NO es válida. Faltan:");
+            for (int i = 0; i < requisitos.length; i++) {
+                if (!requisitos[i]) {
+                    System.out.println("   - Debe tener " + mensajes[i] + ".");
+                }
+            }
+        }
+        
+        sc.close();
+    }
+}</code></pre>
+                            </div>
+                            <div class="explicacion">
+                                <p>Esta versión es más modular: cada método tiene una responsabilidad única. Además, el uso de arrays permite gestionar fácilmente los requisitos y sus mensajes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- cierra ejercicio-body -->
+            </div> <!-- cierra ejercicio-card -->
+
+            <!-- Nota adicional fuera de la tarjeta, dentro de la sección -->
+            <div class="nota-ejercicio">
+                <i class="fas fa-info-circle"></i> Recuerda que estas son solo soluciones de ejemplo. En programación, existen múltiples formas de resolver un problema. ¡Siéntete libre de experimentar y encontrar tu propia solución!
+            </div>
+        </section>
+
+        <!-- Botón de navegación opcional -->
+        <div class="next-steps">
+            <i class="fas fa-arrow-left"></i> Practica con estos ejercicios y luego revisa las soluciones.
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <!-- Configuración de la página actual (para el header) -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: 'ejercicios1',
+            titulo: 'Ejercicios de Java',
+            subtitulo: 'Practica y refuerza tus conocimientos'
+        };
+    </script>
+
+    <!-- Script principal (carga componentes y funciones comunes) -->
+    <script src="js/script.js"></script>
+
+    <!-- Script propio para los botones de solución (no interfiere con script.js) -->
+    <script>
+        (function() {
+            // Función para alternar visibilidad de las respuestas
+            function toggleRespuesta(btn) {
+                const targetId = btn.getAttribute('data-target');
+                const target = document.getElementById(targetId);
+                if (!target) return;
+
+                if (target.classList.contains('visible')) {
+                    target.classList.remove('visible');
+                    btn.innerHTML = btn.innerHTML.replace('Ocultar', 'Mostrar');
+                } else {
+                    target.classList.add('visible');
+                    btn.innerHTML = btn.innerHTML.replace('Mostrar', 'Ocultar');
+                    
+                    // Reinicializar los botones de copiar dentro del nuevo contenido visible
+                    if (typeof setupCopyButtons === 'function') {
+                        setupCopyButtons();
+                    } else {
+                        // Si setupCopyButtons no está disponible (por algún motivo), llamamos a una función local
+                        inicializarBotonesCopiarEn(target);
+                    }
+                }
+            }
+
+            // Inicializar botones de copiar dentro de un contenedor (fallback)
+            function inicializarBotonesCopiarEn(container) {
+                const codeBlocks = container.querySelectorAll('.code-block:not(.has-copy-button)');
+                codeBlocks.forEach(block => {
+                    // Evitar duplicados
+                    if (block.querySelector('.copy-button')) return;
+                    
+                    const pre = block.querySelector('pre');
+                    if (!pre) return;
+                    
+                    const btn = document.createElement('button');
+                    btn.className = 'copy-button';
+                    btn.innerHTML = '<i class="fas fa-copy"></i> <span>Copiar</span>';
+                    
+                    if (window.getComputedStyle(block).position === 'static') {
+                        block.style.position = 'relative';
+                    }
+                    
+                    block.appendChild(btn);
+                    block.classList.add('has-copy-button');
+                    
+                    btn.addEventListener('click', async (e) => {
+                        e.stopPropagation();
+                        const code = pre.textContent.trim();
+                        try {
+                            if (navigator.clipboard && window.isSecureContext) {
+                                await navigator.clipboard.writeText(code);
+                                mostrarMensaje(block, '✅ Código copiado', 'success');
+                            } else {
+                                fallbackCopy(code, block);
+                            }
+                        } catch {
+                            fallbackCopy(code, block);
+                        }
+                    });
+                });
+            }
+
+            function mostrarMensaje(block, texto, tipo) {
+                const msg = document.createElement('div');
+                msg.className = 'copy-message';
+                msg.textContent = texto;
+                if (tipo === 'success') msg.style.borderLeftColor = '#28a745';
+                block.appendChild(msg);
+                setTimeout(() => msg.remove(), 2000);
+            }
+
+            function fallbackCopy(text, block) {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                    mostrarMensaje(block, '✅ Copiado', 'success');
+                } catch {
+                    alert('No se pudo copiar');
+                }
+                document.body.removeChild(ta);
+            }
+
+            // Asignar evento a todos los botones de solución (incluso los que se creen dinámicamente)
+            document.addEventListener('click', function(e) {
+                const btn = e.target.closest('.btn-solucion');
+                if (btn) {
+                    e.preventDefault();
+                    toggleRespuesta(btn);
+                }
+            });
+
+            // Inicializar botones de copiar que ya estén en la página al cargar
+            window.addEventListener('load', function() {
+                if (typeof setupCopyButtons === 'function') {
+                    setupCopyButtons();
+                } else {
+                    inicializarBotonesCopiarEn(document);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
