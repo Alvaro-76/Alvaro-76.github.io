@@ -132,13 +132,12 @@ miMascota.dormir();      // Bobby está durmiendo.
 public interface Volador {
     // Método abstracto (implícitamente public abstract)
     void volar();
-
-    // Método concreto (desde Java 8) usando default
+    
     default void planear() {
         System.out.println("Planeando...");
     }
 
-    // Método estático (desde Java 8)
+    // Método estático
     static void mostrarTipo() {
         System.out.println("Soy un objeto volador");
     }
@@ -173,7 +172,8 @@ public class Avion implements Volador {
 }</code></pre>
             </div>
             <p>En este ejemplo, la interfaz <code>Volador</code> define un método abstracto <code>volar()</code>, un método default <code>planear()</code> y un método estático <code>mostrarTipo()</code>. Las clases <code>Pajaro</code> y <code>Avion</code> implementan la interfaz y proporcionan su propia implementación del método <code>volar()</code>.</p>
-
+            <p>El metodo default <code>planear()</code> se puede usar sin implementarlo en las clases que implementan la interfaz, pero pueden sobrescribirlo si lo desean.</p>
+            
             <div class="code-block snippet">
                 <pre><code>// Uso en main:
 Volador v1 = new Pajaro("Loro");
