@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Manejo de Excepciones</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende a manejar errores en Java con excepciones: try-catch-finally, throw, throws, excepciones personalizadas y try-with-resources.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="excepciones-intro" class="content-section">
+            <h2><i class="fas fa-exclamation-triangle"></i> Introducción a las Excepciones</h2>
+            <p>Una <strong>excepción</strong> es un evento anómalo que ocurre durante la ejecución de un programa y que interrumpe el flujo normal de instrucciones. En Java, las excepciones son objetos que representan ese error y permiten manejarlo de forma controlada.</p>
+            
+            <div class="info-box">
+                <h3>Jerarquía de excepciones en Java</h3>
+                <ul>
+                    <li><code>Throwable</code> (clase raíz)
+                        <ul>
+                            <li><code>Error</code>: problemas graves que no deberían capturarse (ej. <code>OutOfMemoryError</code>).</li>
+                            <li><code>Exception</code>: condiciones que un programa puede querer capturar.
+                                <ul>
+                                    <li><code>RuntimeException</code> (excepciones no verificadas): errores de programación (ej. <code>NullPointerException</code>).</li>
+                                    <li>Otras subclases de <code>Exception</code> (excepciones verificadas): situaciones externas previsibles (ej. <code>IOException</code>).</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+            <p>El manejo de excepciones permite separar el código de tratamiento de errores del código normal, haciéndolo más legible y robusto.</p>
+        </section>
+
+        <section id="try-catch" class="content-section">
+            <h2><i class="fas fa-shield-alt"></i> Bloque <code>try-catch</code></h2>
+            <p>El bloque <code>try</code> envuelve el código que puede lanzar una excepción. Inmediatamente después se colocan uno o varios bloques <code>catch</code> para manejar excepciones específicas.</p>
+            
+            <div class="code-block complete">
+                <pre><code>public class EjemploTryCatch {
+    public static void main(String[] args) {
+        int[] numeros = {1, 2, 3};
+        
+        try {
+            System.out.println("Accediendo a posición 5: " + numeros[5]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: índice fuera de rango.");
+            System.out.println("Mensaje original: " + e.getMessage());
+        }
+        
+        System.out.println("El programa continúa...");
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, se lanza una excepción de tipo <code>ArrayIndexOutOfBoundsException</code> porque se intenta acceder a un índice que no existe en el array.</p>
+            <p>El bloque <code>catch</code> captura esa excepción y permite manejarla sin que el programa termine abruptamente.</p>
+            <p>Al ejecutar el programa muestra por pantalla primero el mensaje de error y luego "El programa continúa...".</p>
+            
+            <h3>Múltiples catch</h3>
+            <p>Se pueden capturar distintos tipos de excepción con varios bloques <code>catch</code>. El orden debe ser de la más específica a la más general.</p>
+            
+            <div class="code-block snippet">
+                <pre><code>try {
+    // código que puede lanzar varias excepciones
+    String texto = null;
+    System.out.println(texto.length());
+    int division = 10 / 0;
+} catch (NullPointerException e) {
+    System.out.println("Error: objeto nulo.");
+} catch (ArithmeticException e) {
+    System.out.println("Error: división por cero.");
+} catch (Exception e) {
+    System.out.println("Error genérico: " + e.getClass().getSimpleName());
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el bloque <code>catch</code> para <code>NullPointerException</code> se ejecutará primero, ya que es la excepción que ocurre. Si el orden fuera al revés (primero el catch de <code>Exception</code>), el código no compilaría porque el catch de <code>Exception</code> atraparía todas las excepciones, incluyendo las específicas, haciendo que los catch posteriores sean inalcanzables.</p>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Si colocas un <code>catch</code> de una excepción genérica antes de una específica, el código no compilará. El compilador exige orden de menor a mayor jerarquía.
+            </div>
+
+            <h3>Multi-catch</h3>
+            <p>Puedes capturar varias excepciones en un mismo bloque si el manejo es el mismo, separándolas con <code>|</code>.</p>
+            <div class="code-block snippet">
+                <pre><code>try {
+    // código peligroso
+} catch (NullPointerException | ArithmeticException e) {
+    System.out.println("Error de operación: " + e.getMessage());
+}</code></pre>
+            </div>
+            <p>En este caso, si ocurre una <code>NullPointerException</code> o una <code>ArithmeticException</code>, se ejecutará el mismo bloque de manejo.</p>
+            <p>Al agrupar excepciones en un solo bloque <code>catch</code>, se evita duplicar código y se mejora la legibilidad del programa, pero también se limita el manejo específico de cada excepción.</p>
+        </section>
+
+        <section id="finally" class="content-section">
+            <h2><i class="fas fa-check-double"></i> Bloque <code>finally</code></h2>
+            <p>El bloque <code>finally</code> se ejecuta <strong>siempre</strong>, haya o no excepción, y haya <code>return</code> o no en el <code>try</code>/<code>catch</code>. Se usa típicamente para liberar recursos (cerrar archivos, conexiones, etc.).</p>
+            
+            <div class="code-block complete">
+                <pre><code>import java.util.Scanner;
+
+public class EjemploFinally {
+    public static void main(String[] args) {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(System.in);
+            System.out.print("Introduce un número: ");
+            int numero = scanner.nextInt();
+            System.out.println("Has introducido: " + numero);
+        } catch (Exception e) {
+            System.out.println("Error de entrada.");
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+                System.out.println("Scanner cerrado en finally.");
+            }
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el bloque <code>finally</code> se asegura de cerrar el recurso <code>Scanner</code> sin importar si ocurrió una excepción o no.</p>
+            
+            <div class="info-box">
+                <p><strong>Nota:</strong> El bloque <code>finally</code> no se ejecuta si se llama a <code>System.exit()</code> dentro del <code>try</code>/<code>catch</code>, o si ocurre un error grave (como un <code>Error</code>).</p>
+            </div>
+        </section>
+
+        <section id="tipos-excepciones" class="content-section">
+            <h2><i class="fas fa-tags"></i> Tipos de excepciones: Checked vs Unchecked</h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Características</th>
+                        <th>Ejemplos</th>
+                        <th>Obligación de manejo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Checked</strong> (verificadas)</td>
+                        <td>Heredan de <code>Exception</code> pero no de <code>RuntimeException</code>. Representan condiciones externas recuperables.</td>
+                        <td><code>IOException</code>, <code>SQLException</code>, <code>ClassNotFoundException</code></td>
+                        <td>El compilador obliga a capturarlas (<code>try-catch</code>) o declararlas (<code>throws</code>).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unchecked</strong> (no verificadas)</td>
+                        <td>Heredan de <code>RuntimeException</code>. Son errores de lógica o de programación.</td>
+                        <td><code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code>, <code>IllegalArgumentException</code></td>
+                        <td>No es obligatorio manejarlas (aunque se puede).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box">
+                <h3>Ejemplo de excepción verificada (IOException)</h3>
+                <div class="code-block snippet">
+                    <pre><code>import java.io.*;
+
+public class LeerArchivo {
+    public static void main(String[] args) {
+        try {
+            FileReader file = new FileReader("archivo.txt");
+            BufferedReader br = new BufferedReader(file);
+            System.out.println(br.readLine());
+            br.close();
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
+    }
+}</code></pre>
+                </div>
+                <p>En el ejemplo anterior, se lanza una excepción de tipo <code>IOException</code> si no se puede leer el archivo.</p>
+                <p>Si no capturamos <code>IOException</code> o no la declaramos con <code>throws</code>, el compilador dará error.</p>
+            </div>
+        </section>
+
+        <section id="throw-throws" class="content-section">
+            <h2><i class="fas fa-paper-plane"></i> Lanzar y propagar excepciones: <code>throw</code> y <code>throws</code></h2>
+            
+            <h3><code>throw</code> – lanzar una excepción explícitamente</h3>
+            <p>Se usa para lanzar un objeto de tipo <code>Throwable</code> (normalmente una excepción).</p>
+            <div class="code-block snippet">
+                <pre><code>public static void validarEdad(int edad) {
+    if (edad < 0 || edad > 150) {
+        throw new IllegalArgumentException("Edad no válida: " + edad);
+    }
+    System.out.println("Edad correcta.");
+}</code></pre>
+            </div>
+            <p>En este ejemplo, se lanza una excepción de tipo <code>IllegalArgumentException</code> si la edad no está dentro del rango válido (0 a 150).</p>
+            
+            <h3><code>throws</code> – declarar que un método puede lanzar una excepción</h3>
+            <p>Se coloca en la firma del método para indicar que puede propagar una o varias excepciones (checked) hacia quien lo llama.</p>
+            <div class="code-block complete">
+                <pre><code>public class ThrowsExample {
+    
+    // Este método declara que puede lanzar una IOException
+    public static void leerArchivo(String ruta) throws IOException {
+        FileReader file = new FileReader(ruta);
+        BufferedReader br = new BufferedReader(file);
+        System.out.println(br.readLine());
+        br.close();
+    }
+    
+    public static void main(String[] args) {
+        try {
+            leerArchivo("datos.txt");
+        } catch (IOException e) {
+            System.out.println("Error al leer: " + e.getMessage());
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En el caso anteior, el método <code>leerArchivo</code> declara que puede lanzar una <code>IOException</code>, lo que obliga al método <code>main</code> a manejarla o declararla también con <code>throws</code>.</p>
+            
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Diferencia clave:</strong>
+                <ul>
+                    <li><code>throw</code> lanza la excepción (instancia).</li>
+                    <li><code>throws</code> declara que el método puede lanzar ese tipo de excepción.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="personalizadas" class="content-section">
+            <h2><i class="fas fa-pencil-alt"></i> Crear excepciones propias</h2>
+            <p>Podemos definir nuestras propias clases de excepción extendiendo <code>Exception</code> (para checked) o <code>RuntimeException</code> (para unchecked).</p>
+            
+            <div class="code-block complete">
+                <pre><code>// Excepción checked personalizada
+public class SaldoInsuficienteException extends Exception {
+    
+    public SaldoInsuficienteException() {
+        super("Saldo insuficiente para realizar la operación.");
+    }
+    
+    public SaldoInsuficienteException(String mensaje) {
+        super(mensaje);
+    }
+}
+
+// Uso en una clase CuentaBancaria
+public class CuentaBancaria {
+    private double saldo;
+    
+    public CuentaBancaria(double saldoInicial) {
+        this.saldo = saldoInicial;
+    }
+    
+    public void retirar(double cantidad) throws SaldoInsuficienteException {
+        if (cantidad > saldo) {
+            throw new SaldoInsuficienteException("No puedes retirar " + cantidad + ", saldo actual: " + saldo);
+        }
+        saldo -= cantidad;
+        System.out.println("Retiro exitoso. Nuevo saldo: " + saldo);
+    }
+    
+    public static void main(String[] args) {
+        CuentaBancaria cuenta = new CuentaBancaria(1000);
+        try {
+            cuenta.retirar(1500);
+        } catch (SaldoInsuficienteException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, se define una excepción personalizada llamada <code>SaldoInsuficienteException</code> que se lanza cuando se intenta retirar una cantidad mayor al saldo disponible en la cuenta bancaria.</p>
+            <p>Al crear una excepción personalizada es recomendable proporcionar al menos los constructores que reciban un mensaje y, si se desea, una causa.</p>
+        </section>
+
+        <section id="try-with-resources" class="content-section">
+            <h2><i class="fas fa-wind"></i> Try-with-resources (Java 7+)</h2>
+            <p>Esta construcción cierra automáticamente los recursos que implementan <code>AutoCloseable</code> (como <code>Scanner</code>, <code>BufferedReader</code>, <code>Connection</code>, etc.) al finalizar el bloque, sin necesidad de <code>finally</code> explícito.</p>
+            
+            <div class="code-block complete">
+                <pre><code>import java.io.*;
+
+public class TryWithResourcesExample {
+    public static void main(String[] args) {
+        // Los recursos se declaran entre paréntesis después de try
+        try (FileReader fr = new FileReader("datos.txt");
+             BufferedReader br = new BufferedReader(fr)) {
+            
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                System.out.println(linea);
+            }
+            
+        } catch (IOException e) {
+            System.out.println("Error de E/S: " + e.getMessage());
+        }
+        // Los recursos se cierran automáticamente, incluso si hay excepción
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, tanto el <code>FileReader</code> como el <code>BufferedReader</code> se cierran automáticamente al salir del bloque <code>try</code>, sin importar si ocurrió una excepción o no.</p>
+            
+            <div class="info-box">
+                <p>Puedes declarar múltiples recursos separados por punto y coma. Se cierran en orden inverso al de declaración.</p>
+            </div>
+            
+            <h3>Ejemplo con Scanner</h3>
+            <div class="code-block snippet">
+                <pre><code>try (Scanner sc = new Scanner(new File("numeros.txt"))) {
+    while (sc.hasNextInt()) {
+        System.out.println(sc.nextInt());
+    }
+} catch (FileNotFoundException e) {
+    System.out.println("Archivo no encontrado.");
+}</code></pre>
+            </div>
+            <p>En este ejemplo, el recurso <code>Scanner</code> se cierra automáticamente al finalizar el bloque <code>try</code>, incluso si ocurre una excepción.</p>
+        </section>
+
+        <section id="buenas-practicas" class="content-section">
+            <h2><i class="fas fa-thumbs-up"></i> Buenas prácticas con excepciones</h2>
+            
+            <ul class="step-list">
+                <li><strong>No captures excepciones genéricas</strong> si no es necesario. Prefiere tipos específicos (<code>IOException</code>, <code>SQLException</code>).</li>
+                <li><strong>No ignores la excepción</strong>: un catch vacío oculta errores. Al menos registra el problema (<code>e.printStackTrace()</code> o log).</li>
+                <li><strong>Usa excepciones para situaciones excepcionales</strong>, no para control de flujo normal.</li>
+                <li><strong>Documenta las excepciones</strong> que lanza un método con <code>@throws</code> en JavaDoc.</li>
+                <li><strong>Preserva la causa original</strong> cuando lances una nueva excepción (encadenamiento).</li>
+                <li><strong>Libera recursos</strong> siempre (usa try-with-resources o finally).</li>
+                <li><strong>No captures <code>Throwable</code> o <code>Error</code></strong> a menos que tengas una razón muy específica (los errores no son recuperables).</li>
+            </ul>
+            
+            <div class="code-block snippet">
+                <pre><code>// Ejemplo de encadenamiento de excepciones
+try {
+    // código que lanza IOException
+} catch (IOException e) {
+    throw new MiExcepcion("Error al procesar archivo", e); // la causa original se conserva
+}</code></pre>
+            </div>
+        </section>
+
+    </main>
+    
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: "excepciones-intro",
+            titulo: "Manejo de Excepciones",
+            subtitulo: "Errores, try-catch-finally, throw, throws y más"
+        };
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
