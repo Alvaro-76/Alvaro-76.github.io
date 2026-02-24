@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Paso a Paso - Interfaces Gráficas con JOptionPane</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Meta tags específicos de la página -->
+    <meta name="description" content="Aprende a crear interfaces gráficas básicas en Java usando JOptionPane: mensajes, entrada de datos, confirmación y opciones personalizadas.">
+</head>
+<body>
+    <!-- =============================================
+         INCLUSIÓN DE COMPONENTES (vía JavaScript)
+         ============================================= -->
+    
+    <div id="menu-container"></div>
+    <div id="header-container"></div>
+    
+    <!-- Contenido principal -->
+    <main class="container">
+        <!-- =============================================
+             CONTENIDO ESPECÍFICO DE LA PÁGINA
+             ============================================= -->
+        
+        <section id="intro" class="content-section">
+            <h2><i class="fas fa-window-maximize"></i> Introducción a las Interfaces Gráficas</h2>
+            <p>Hasta ahora hemos trabajado con programas que se comunican con el usuario a través de la consola (entrada/salida de texto). Sin embargo, la mayoría de las aplicaciones modernas utilizan <strong>interfaces gráficas de usuario (GUI)</strong> para interactuar de forma más visual e intuitiva.</p>
+            <p>Java proporciona varias bibliotecas para crear interfaces gráficas. La más conocida es <strong>Swing</strong>, que forma parte de la plataforma Java estándar (Java SE). En este tema nos centraremos en una clase muy sencilla de Swing: <code>JOptionPane</code>, que permite mostrar pequeños cuadros de diálogo para mensajes, entrada de datos y confirmaciones.</p>
+            
+            <div class="info-box">
+                <h3>¿Qué es JOptionPane?</h3>
+                <p><code>javax.swing.JOptionPane</code> es una clase que facilita la creación de cuadros de diálogo modales (bloquean la interacción con la ventana padre hasta que se cierran) con un mínimo de código. Es ideal para programas pequeños, utilidades o para aprender conceptos básicos de GUI sin complicarse con la creación de ventanas complejas.</p>
+                <p>Principales métodos estáticos:</p>
+                <ul>
+                    <li><code>showMessageDialog(...)</code>  muestra un mensaje.</li>
+                    <li><code>showInputDialog(...)</code>  pide un dato al usuario.</li>
+                    <li><code>showConfirmDialog(...)</code>  solicita una confirmación (Sí/No, Aceptar/Cancelar, etc.).</li>
+                    <li><code>showOptionDialog(...)</code>  permite personalizar los botones y el mensaje.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="message-dialog" class="content-section">
+            <h2><i class="fas fa-info-circle"></i> Mostrar mensajes: <code>showMessageDialog</code></h2>
+            <p>El método más simple es <code>showMessageDialog</code>. Solo necesitamos indicar el componente padre (normalmente <code>null</code> para centrarlo en la pantalla), el mensaje y opcionalmente el título y el tipo de mensaje.</p>
+
+            <h3>Sintaxis básica</h3>
+            <div class="code-block snippet">
+                <pre><code>JOptionPane.showMessageDialog(padre, mensaje);
+JOptionPane.showMessageDialog(padre, mensaje, título, tipoMensaje);</code></pre>
+            </div>
+
+            <h3>Tipos de mensaje</h3>
+            <p>El parámetro <code>tipoMensaje</code> modifica el icono que aparece. Puede ser una de las siguientes constantes de <code>JOptionPane</code>:</p>
+            <table class="data-table">
+                <thead>
+                    <tr><th>Constante</th><th>Descripción</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>JOptionPane.ERROR_MESSAGE</code></td><td>Mensaje de error</td></tr>
+                    <tr><td><code>JOptionPane.INFORMATION_MESSAGE</code></td><td>Mensaje informativo</td></tr>
+                    <tr><td><code>JOptionPane.WARNING_MESSAGE</code></td><td>Mensaje de advertencia</td></tr>
+                    <tr><td><code>JOptionPane.QUESTION_MESSAGE</code></td><td>Mensaje de pregunta (normalmente usado en cuadros de entrada)</td></tr>
+                    <tr><td><code>JOptionPane.PLAIN_MESSAGE</code></td><td>Sin icono</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Ejemplo práctico</h3>
+            <div class="code-block complete">
+                <pre><code>import javax.swing.JOptionPane;
+
+public class EjemploMessageDialog {
+    public static void main(String[] args) {
+        // Mensaje simple (sin título, icono por defecto INFORMATION)
+        JOptionPane.showMessageDialog(null, "¡Hola, mundo gráfico!");
+        
+        // Mensaje con título y tipo ERROR
+        JOptionPane.showMessageDialog(null, 
+                "No se pudo abrir el archivo", 
+                "Error crítico", 
+                JOptionPane.ERROR_MESSAGE);
+        
+        // Mensaje con título y tipo WARNING
+        JOptionPane.showMessageDialog(null, 
+                "El disco está casi lleno", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
+    }
+}</code></pre>
+            </div>
+            <p>Cuando ejecutes este programa, aparecerán tres cuadros de diálogo consecutivos. El primer cuadro mostrará "¡Hola, mundo gráfico!" sin título y con el icono de información por defecto. El segundo tendrá título "Error crítico" y un icono de error. El tercero será una advertencia.</p>
+            <p>Observa que el primer parámetro es <code>null</code>; esto indica que el cuadro de diálogo no tiene ventana padre y se centrará en la pantalla.</p>
+        </section>
+
+        <section id="input-dialog" class="content-section">
+            <h2><i class="fas fa-keyboard"></i> Pedir datos al usuario: <code>showInputDialog</code></h2>
+            <p>Para solicitar información al usuario usamos <code>showInputDialog</code>. Este método muestra un cuadro con un campo de texto y devuelve lo que el usuario escribió (como <code>String</code>).</p>
+
+            <h3>Sintaxis común</h3>
+            <div class="code-block snippet">
+                <pre><code>String respuesta = JOptionPane.showInputDialog(padre, mensaje);
+String respuesta = JOptionPane.showInputDialog(padre, mensaje, título, tipoMensaje);</code></pre>
+            </div>
+
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Importante:</strong> Si el usuario hace clic en "Cancelar" o cierra el diálogo, el método devuelve <code>null</code>. Siempre debemos verificar que no sea <code>null</code> antes de usar el valor.
+            </div>
+
+            <h3>Ejemplo: Preguntar el nombre</h3>
+            <div class="code-block complete">
+                <pre><code>import javax.swing.JOptionPane;
+
+public class EjemploInputDialog {
+    public static void main(String[] args) {
+        String nombre = JOptionPane.showInputDialog(null, 
+                "¿Cómo te llamas?", 
+                "Saludo", 
+                JOptionPane.QUESTION_MESSAGE);
+        
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Hola, " + nombre + "!");
+        } else {
+            JOptionPane.showMessageDialog(null, "No ingresaste ningún nombre.");
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo, se abre un cuadro de diálogo con el mensaje "¿Cómo te llamas?", título "Saludo" y un icono de pregunta. La respuesta se guarda en la variable <code>nombre</code>. Luego se muestra un saludo personalizado o un mensaje de error si el usuario canceló o dejó vacío.</p>
+
+            <h3>Valores por defecto y listas desplegables</h3>
+            <p>Existen variantes de <code>showInputDialog</code> que permiten mostrar una lista desplegable para que el usuario elija una opción. Por ejemplo:</p>
+            <div class="code-block snippet">
+                <pre><code>String[] colores = {"Rojo", "Verde", "Azul"};
+String colorElegido = (String) JOptionPane.showInputDialog(
+        null,
+        "Elige un color:",
+        "Selector de color",
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        colores,
+        colores[0]);</code></pre>
+            </div>
+            <p>El séptimo parámetro es el valor por defecto. El método devuelve el objeto seleccionado (en este caso un String). Observa que hacemos un casting a <code>String</code> porque el método devuelve <code>Object</code>.</p>
+        </section>
+
+        <section id="confirm-dialog" class="content-section">
+            <h2><i class="fas fa-question-circle"></i> Confirmaciones: <code>showConfirmDialog</code></h2>
+            <p>Cuando necesitamos que el usuario confirme o rechace una acción, usamos <code>showConfirmDialog</code>. Este método devuelve un entero que indica qué botón pulsó el usuario.</p>
+
+            <h3>Tipos de opciones</h3>
+            <p>Podemos elegir la combinación de botones mediante constantes:</p>
+            <ul>
+                <li><code>JOptionPane.YES_NO_OPTION</code> – botones "Sí" y "No".</li>
+                <li><code>JOptionPane.YES_NO_CANCEL_OPTION</code> – botones "Sí", "No" y "Cancelar".</li>
+                <li><code>JOptionPane.OK_CANCEL_OPTION</code> – botones "Aceptar" y "Cancelar".</li>
+                <li>Por defecto se usa <code>YES_NO_CANCEL_OPTION</code> si no se especifica.</li>
+            </ul>
+
+            <h3>Valores de retorno</h3>
+            <p>El método devuelve una de las siguientes constantes (definidas en <code>JOptionPane</code>):</p>
+            <table class="data-table">
+                <tr><th>Constante</th><th>Valor</th><th>Significado</th></tr>
+                <tr><td><code>JOptionPane.YES_OPTION</code></td><td>0</td><td>Se pulsó "Sí"</td></tr>
+                <tr><td><code>JOptionPane.NO_OPTION</code></td><td>1</td><td>Se pulsó "No"</td></tr>
+                <tr><td><code>JOptionPane.CANCEL_OPTION</code></td><td>2</td><td>Se pulsó "Cancelar"</td></tr>
+                <tr><td><code>JOptionPane.OK_OPTION</code></td><td>0</td><td>Se pulsó "Aceptar" (en OK_CANCEL_OPTION)</td></tr>
+                <tr><td><code>JOptionPane.CLOSED_OPTION</code></td><td>-1</td><td>El usuario cerró el diálogo sin elegir</td></tr>
+            </table>
+
+            <h3>Ejemplo: Confirmar salida</h3>
+            <div class="code-block complete">
+                <pre><code>import javax.swing.JOptionPane;
+
+public class EjemploConfirmDialog {
+    public static void main(String[] args) {
+        int respuesta = JOptionPane.showConfirmDialog(
+                null,
+                "¿Estás seguro de que quieres salir?",
+                "Confirmar salida",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+        
+        if (respuesta == JOptionPane.YES_OPTION) {
+            JOptionPane.showMessageDialog(null, "Saliendo del programa...");
+            // Aquí iría el código para salir
+        } else {
+            JOptionPane.showMessageDialog(null, "Cancelado.");
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este ejemplo se muestra un cuadro de confirmación con los botones "Sí" y "No" y un icono de advertencia. Dependiendo de la respuesta, se muestra un mensaje diferente.</p>
+        </section>
+
+        <section id="option-dialog" class="content-section">
+            <h2><i class="fas fa-cogs"></i> Diálogos personalizados: <code>showOptionDialog</code></h2>
+            <p>Si necesitamos un control total sobre los botones y el mensaje, podemos usar <code>showOptionDialog</code>. Este método permite especificar un array de objetos para los botones (pueden ser strings o componentes) y el valor por defecto.</p>
+
+            <h3>Sintaxis</h3>
+            <div class="code-block snippet">
+                <pre><code>int resultado = JOptionPane.showOptionDialog(
+        padre,
+        mensaje,
+        título,
+        tipoOpción,        // por ejemplo YES_NO_OPTION
+        tipoMensaje,       // por ejemplo QUESTION_MESSAGE
+        icono,             // icono personalizado (o null)
+        opciones,          // array de objetos para los botones (ej. String[])
+        valorPorDefecto);  // el botón seleccionado por defecto</code></pre>
+            </div>
+
+            <h3>Ejemplo: Elegir bebida</h3>
+            <div class="code-block complete">
+                <pre><code>import javax.swing.JOptionPane;
+
+public class EjemploOptionDialog {
+    public static void main(String[] args) {
+        String[] bebidas = {"Café", "Té", "Jugo", "Agua"};
+        
+        int eleccion = JOptionPane.showOptionDialog(
+                null,
+                "¿Qué deseas tomar?",
+                "Selecciona una bebida",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                bebidas,
+                bebidas[0]);
+        
+        if (eleccion != JOptionPane.CLOSED_OPTION) {
+            JOptionPane.showMessageDialog(null, 
+                    "Has elegido: " + bebidas[eleccion]);
+        } else {
+            JOptionPane.showMessageDialog(null, "No elegiste nada.");
+        }
+    }
+}</code></pre>
+            </div>
+            <p>En este caso, <code>eleccion</code> es el índice del botón pulsado (0, 1, 2, …). Si el usuario cierra el diálogo, se obtiene <code>CLOSED_OPTION</code> (-1).</p>
+        </section>
+
+        <section id="ejemplo-completo" class="content-section">
+            <h2><i class="fas fa-project-diagram"></i> Ejemplo completo: Calculadora sencilla con diálogos</h2>
+            <p>Vamos a combinar los distintos tipos de diálogo para crear una pequeña calculadora que pida dos números, realice una operación y muestre el resultado.</p>
+
+            <div class="code-block complete">
+                <pre><code>import javax.swing.JOptionPane;
+
+public class CalculadoraConDialogos {
+    public static void main(String[] args) {
+        // Pedir primer número
+        String strNum1 = JOptionPane.showInputDialog(null, 
+                "Introduce el primer número:", 
+                "Calculadora", 
+                JOptionPane.QUESTION_MESSAGE);
+        if (strNum1 == null) return; // Cancelar → salir
+
+        // Pedir segundo número
+        String strNum2 = JOptionPane.showInputDialog(null, 
+                "Introduce el segundo número:", 
+                "Calculadora", 
+                JOptionPane.QUESTION_MESSAGE);
+        if (strNum2 == null) return;
+
+        // Convertir a números (manejo básico de errores)
+        double num1, num2;
+        try {
+            num1 = Double.parseDouble(strNum1);
+            num2 = Double.parseDouble(strNum2);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Uno de los valores no es un número válido.",
+                    "Error de entrada",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Elegir operación mediante un cuadro de opciones
+        String[] operaciones = {"Sumar", "Restar", "Multiplicar", "Dividir"};
+        int opcion = JOptionPane.showOptionDialog(
+                null,
+                "Elige una operación:",
+                "Operación",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                operaciones,
+                operaciones[0]);
+
+        if (opcion == JOptionPane.CLOSED_OPTION) return;
+
+        double resultado = 0;
+        boolean ok = true;
+
+        switch (opcion) {
+            case 0: resultado = num1 + num2; break;
+            case 1: resultado = num1 - num2; break;
+            case 2: resultado = num1 * num2; break;
+            case 3:
+                if (num2 == 0) {
+                    JOptionPane.showMessageDialog(null,
+                            "No se puede dividir entre cero.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    ok = false;
+                } else {
+                    resultado = num1 / num2;
+                }
+                break;
+        }
+
+        if (ok) {
+            JOptionPane.showMessageDialog(null,
+                    "El resultado de " + operaciones[opcion].toLowerCase() +
+                    " es: " + resultado,
+                    "Resultado",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+}</code></pre>
+            </div>
+            <p>Este programa pide dos números mediante cuadros de entrada, luego muestra un menú con las operaciones posibles y finalmente muestra el resultado en un cuadro de mensaje. Incluye un manejo básico de errores para la conversión numérica y la división entre cero.</p>
+            <p>Observa cómo se verifica que el usuario no haya cancelado en cada paso (<code>if (strNum1 == null) return;</code>).</p>
+        </section>
+
+        <section id="buenas-practicas" class="content-section">
+            <h2><i class="fas fa-thumbs-up"></i> Buenas prácticas y consideraciones</h2>
+            <ul class="step-list">
+                <li><strong>Verifica siempre si el usuario canceló la entrada:</strong> <code>showInputDialog</code> devuelve <code>null</code> al cancelar. Ignorar esto puede provocar <code>NullPointerException</code>.</li>
+                <li><strong>No abusar de los cuadros de diálogo:</strong> Para aplicaciones más complejas es mejor crear ventanas con <code>JFrame</code> y componentes como botones, etiquetas, etc. Los diálogos modales pueden resultar molestos si se usan en exceso.</li>
+                <li><strong>Convierte correctamente los tipos:</strong> Recuerda que <code>showInputDialog</code> siempre devuelve un <code>String</code>. Debes convertirlo al tipo necesario (con <code>Integer.parseInt()</code>, <code>Double.parseDouble()</code>, etc.) y manejar las posibles excepciones.</li>
+                <li><strong>Ejecución en el hilo de eventos (EDT):</strong> Aunque para programas pequeños no es estrictamente necesario, en aplicaciones Swing reales todas las operaciones de GUI deben ejecutarse en el hilo de despacho de eventos. Para ello se usa <code>SwingUtilities.invokeLater()</code>. Si tu programa solo usa <code>JOptionPane</code> desde el <code>main</code>, no tendrás problemas, pero es bueno conocerlo.</li>
+                <li><strong>Internacionalización:</strong> Los textos de los botones ("Sí", "No", "Cancelar", etc.) se adaptan automáticamente al idioma del sistema operativo si usas las constantes estándar (<code>YES_NO_OPTION</code>, etc.).</li>
+            </ul>
+
+            <div class="info-box">
+                <h3>Próximos pasos</h3>
+                <p><code>JOptionPane</code> es solo la puerta de entrada al mundo de las interfaces gráficas en Java. Si quieres crear aplicaciones más complejas con ventanas, menús, tablas, etc., deberás aprender a usar <code>JFrame</code>, <code>JPanel</code>, <code>JButton</code>, <code>JLabel</code> y los manejadores de eventos. Esto es precisamente lo que abordaremos en el siguiente tema: <strong>Swing básico: Creación de ventanas y manejo de eventos</strong>.</p>
+            </div>
+        </section>
+
+    </main>
+    
+    <div id="footer-container"></div>
+    
+    <!-- =============================================
+         CONFIGURACIÓN DE LA PÁGINA ACTUAL
+         ============================================= -->
+    <script>
+        const PAGINA_CONFIG = {
+            id: "intro",
+            titulo: "Interfaces Gráficas con JOptionPane",
+            subtitulo: "Primeros pasos en Swing: diálogos simples"
+        };
+    </script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
