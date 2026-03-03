@@ -340,8 +340,8 @@ public class TryWithResourcesExample {
             
             <ul class="step-list">
                 <li><strong>No captures excepciones genéricas</strong> si no es necesario. Prefiere tipos específicos (<code>IOException</code>, <code>SQLException</code>).</li>
-                <li><strong>No ignores la excepción</strong>: un catch vacío oculta errores. Al menos registra el problema (<code>e.printStackTrace()</code> o log).</li>
-                <li><strong>Usa excepciones para situaciones excepcionales</strong>, no para control de flujo normal.</li>
+                <li><strong>No ignores la excepción</strong> un catch vacío oculta errores. Al menos registra el problema (<code>e.printStackTrace()</code> o log).</li>
+                <li><strong>Usa excepciones para situaciones excepcionales,</strong> no para control de flujo normal.</li>
                 <li><strong>Documenta las excepciones</strong> que lanza un método con <code>@throws</code> en JavaDoc.</li>
                 <li><strong>Preserva la causa original</strong> cuando lances una nueva excepción (encadenamiento).</li>
                 <li><strong>Libera recursos</strong> siempre (usa try-with-resources o finally).</li>
