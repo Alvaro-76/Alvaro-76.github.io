@@ -237,13 +237,14 @@ p.saludar();</code></pre>
 }</code></pre>
             </div>
             <p>En este ejemplo, los atributos <code>nombre</code> y <code>edad</code> están declarados como <code>private</code>, lo que significa que no pueden ser accedidos directamente desde fuera de la clase. Para acceder a ellos, se utilizan métodos públicos llamados <strong>getters</strong> y <strong>setters</strong>.</p>
-            
-            <p>Beneficios del encapsulamiento:</p>
-            <ul>
-                <li>Controlamos cómo se accede y modifica los datos (podemos añadir validaciones).</li>
-                <li>Podemos cambiar la implementación interna sin afectar a quienes usan la clase.</li>
-                <li>Ocultamos la complejidad y exponemos solo lo necesario.</li>
-            </ul>
+            <div class="info-box">
+                <h3>Beneficios del encapsulamiento:</h3>
+                <ul>
+                    <li>Controlamos cómo se accede y modifica los datos (podemos añadir validaciones).</li>
+                    <li>Podemos cambiar la implementación interna sin afectar a quienes usan la clase.</li>
+                    <li>Ocultamos la complejidad y exponemos solo lo necesario.</li>
+                </ul>
+            </div>
 
             <div class="info-box warning">
                 <i class="fas fa-exclamation-triangle"></i> <strong>Nota:</strong> Gracias al encapsulamiento, podemos proteger los datos de un objeto y garantizar que se mantengan en un estado válido. Por ejemplo, en el setter de edad hemos añadido una validación para evitar asignar valores no realistas. De este modo podemos validar los datos antes de asignarlos a los atributos, lo que mejora la robustez de nuestro código.
